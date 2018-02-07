@@ -1,0 +1,966 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Devices &#8212; Mordor 2.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/mordor_icon_small.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Experiments and complements" href="Experiments.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+<div class="header" role="banner">
+  <div class="logo">
+    <a href="index.html">
+      <img class="logo" src="_static/mordor_icon_medium.ico" alt="Logo"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Experiments.html" title="Experiments and complements"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Mordor 2.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="devices">
+<h1>Devices<a class="headerlink" href="#devices" title="Permalink to this headline">¶</a></h1>
+<p><em>Mordor</em> can have any number of devices configured, although only those useful for a particular application will be available in the corresponding device selector. Section <a class="reference internal" href="#adddevices"><span class="std std-ref">How to add a new device</span></a> gives more details on adding new equipement to <em>Mordor</em>.</p>
+<p>Currently, these are the devices configured for the different types of instruments:</p>
+<ol class="arabic">
+<li><p class="first"><strong>Monochromators:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#dummy-monochromator"><span class="std std-ref">Dummy monochromator</span></a></li>
+<li><a class="reference internal" href="#actonsp2500i"><span class="std std-ref">Acton SP2500i</span></a></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Spectrometers:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#dummy-spectrometer"><span class="std std-ref">Dummy spectrometer</span></a></li>
+<li><a class="reference internal" href="#hr4000"><span class="std std-ref">Ocean Optics HR4000</span></a></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Lock-In amplifiers:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#dummy-lockin"><span class="std std-ref">Dummy lockin</span></a></li>
+<li><a class="reference internal" href="#sr830"><span class="std std-ref">SR830 Lock-In</span></a></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Source-meter units (SMU):</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#dummy-smu"><span class="std std-ref">Dummy SMU</span></a></li>
+<li><a class="reference internal" href="#keithley236"><span class="std std-ref">Keithley 236</span></a></li>
+<li><a class="reference internal" href="#keithley2430"><span class="std std-ref">Keithley 2430</span></a></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Multimeters:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#keithley2000"><span class="std std-ref">Keithley 2000</span></a></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+<div class="section" id="devices-dependencies">
+<h2>Devices dependencies<a class="headerlink" href="#devices-dependencies" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="how-to-add-a-new-device">
+<span id="adddevices"></span><h2>How to add a new device<a class="headerlink" href="#how-to-add-a-new-device" title="Permalink to this headline">¶</a></h2>
+<p>Text</p>
+</div>
+<div class="section" id="details-of-configured-devices">
+<h2>Details of configured devices<a class="headerlink" href="#details-of-configured-devices" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-Dummy_monochromator"><span id="dummy-monochromator"></span></span><dl class="class">
+<dt id="Dummy_monochromator.Dummy_monochromator">
+<em class="property">class </em><code class="descclassname">Dummy_monochromator.</code><code class="descname">Dummy_monochromator</code><span class="sig-paren">(</span><em>port=None</em>, <em>name='Dummy monochromator'</em>, <em>info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_monochromator.Dummy_monochromator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some text</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="Dummy_monochromator.New">
+<em class="property">class </em><code class="descclassname">Dummy_monochromator.</code><code class="descname">New</code><span class="sig-paren">(</span><em>port=None</em>, <em>name='Dummy monochromator'</em>, <em>info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_monochromator.New" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standarised name for the Dummy_monochromator class</p>
+</dd></dl>
+
+<span class="target" id="module-Dummy_spectrometer"><span id="dummy-spectrometer"></span></span><dl class="class">
+<dt id="Dummy_spectrometer.New">
+<em class="property">class </em><code class="descclassname">Dummy_spectrometer.</code><code class="descname">New</code><span class="sig-paren">(</span><em>port=None</em>, <em>name='Dummy spectrometer'</em>, <em>info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_spectrometer.New" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standarised name for the Dummy_spectrometer class</p>
+</dd></dl>
+
+<span class="target" id="module-Dummy_lockin"><span id="dummy-lockin"></span></span><dl class="class">
+<dt id="Dummy_lockin.New">
+<em class="property">class </em><code class="descclassname">Dummy_lockin.</code><code class="descname">New</code><span class="sig-paren">(</span><em>port=None</em>, <em>name='Dummy lockin'</em>, <em>info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_lockin.New" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standarised name for the Dummy_monochromator class</p>
+</dd></dl>
+
+<span class="target" id="module-Dummy_SMU"><span id="dummy-smu"></span></span><dl class="class">
+<dt id="Dummy_SMU.DummySMU">
+<em class="property">class </em><code class="descclassname">Dummy_SMU.</code><code class="descname">DummySMU</code><span class="sig-paren">(</span><em>address='GPIB::20'</em>, <em>name='Dummy SMU'</em>, <em>info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_SMU.DummySMU" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dummy Source Measure Unit and template for other SMU</p>
+<dl class="method">
+<dt id="Dummy_SMU.DummySMU.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_SMU.DummySMU.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the connection with the instrument</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dummy_SMU.DummySMU.get_data">
+<code class="descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_SMU.DummySMU.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>We get the data fromt he SMU. Depending on the order provided by the SMU we need to invert the output to
+have voltage-current, regardless of who is the bias or the meas. We convert the data to an array and re-shape
+it in two columns.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the measured data, a tuple with two vectors: voltage and current</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dummy_SMU.DummySMU.measure">
+<code class="descname">measure</code><span class="sig-paren">(</span><em>source='v'</em>, <em>start=0</em>, <em>stop=1</em>, <em>step=0.05</em>, <em>points=1</em>, <em>compliance=2</em>, <em>measRange=0</em>, <em>delay=0</em>, <em>intTime=0</em><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_SMU.DummySMU.measure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepares and triggers the IV measurement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> – ‘v’ or ‘i’ for voltage or current biasing, respectively</li>
+<li><strong>start</strong> – start bias</li>
+<li><strong>stop</strong> – stop bias</li>
+<li><strong>points</strong> – points to measure per decade in current bias mode</li>
+<li><strong>step</strong> – step size in voltage bias mode</li>
+<li><strong>compliance</strong> – meas compliance</li>
+<li><strong>measRange</strong> – the meas range as the index of self.i_range or self.v_range</li>
+<li><strong>delay</strong> – the delay between applying a bias and taking the meas</li>
+<li><strong>intTime</strong> – integration time as the index from the self.int_time list</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The estimated measuring time</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dummy_SMU.DummySMU.operate_off">
+<code class="descname">operate_off</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_SMU.DummySMU.operate_off" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn off the output of the SMU</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dummy_SMU.DummySMU.operate_on">
+<code class="descname">operate_on</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_SMU.DummySMU.operate_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn on the output of the SMU</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dummy_SMU.DummySMU.query">
+<code class="descname">query</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_SMU.DummySMU.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a message to the instrument and then waits for an answer. depending on the nature of the device and
+how is connected, this would look different</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> – command to be executed in the instrument</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the answer to that command</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dummy_SMU.DummySMU.set_bias">
+<code class="descname">set_bias</code><span class="sig-paren">(</span><em>biasValue=0.0</em><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_SMU.DummySMU.set_bias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a bias to the source. If the source is not turned on or the function is not set to ‘dc’,
+the bias will not be applied</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>biasValue</strong> – the chosen bias</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dummy_SMU.DummySMU.set_source_function">
+<code class="descname">set_source_function</code><span class="sig-paren">(</span><em>function</em>, <em>source</em><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_SMU.DummySMU.set_source_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the functionality of the source, what to bias and how to do it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>function</strong> – ‘dc’ or ‘sweep’, dc or sweep operating function</li>
+<li><strong>source</strong> – ‘v’ or ‘i’, voltage or current source</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dummy_SMU.DummySMU.setup_measurement">
+<code class="descname">setup_measurement</code><span class="sig-paren">(</span><em>function='dc'</em>, <em>source='v'</em>, <em>compliance=2</em>, <em>measRange=0</em>, <em>delay=0</em>, <em>intTime=0</em><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_SMU.DummySMU.setup_measurement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepares and triggers the IV measurement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>function</strong> – ‘dc’ or ‘sweep’, dc or sweep operating function</li>
+<li><strong>source</strong> – ‘v’ or ‘i’ for voltage or current biasing, respectively</li>
+<li><strong>compliance</strong> – meas compliance</li>
+<li><strong>measRange</strong> – the meas range as the index of self.i_range or self.v_range</li>
+<li><strong>delay</strong> – the delay between applying a bias and taking the meas</li>
+<li><strong>intTime</strong> – integration time as the index from the self.int_time list</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The measured data</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dummy_SMU.DummySMU.update_compliance">
+<code class="descname">update_compliance</code><span class="sig-paren">(</span><em>compliance</em>, <em>measRange</em><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_SMU.DummySMU.update_compliance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the compliance and the measurement range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>compliance</strong> – current or voltage compliance, oposite to the selected source</li>
+<li><strong>measRange</strong> – the meas range as the index of self.i_range or self.v_range</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dummy_SMU.DummySMU.update_integration_time">
+<code class="descname">update_integration_time</code><span class="sig-paren">(</span><em>new_time</em><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_SMU.DummySMU.update_integration_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the integration time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_time</strong> – new integration time as the index from the self.int_time list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dummy_SMU.DummySMU.update_waiting_time">
+<code class="descname">update_waiting_time</code><span class="sig-paren">(</span><em>new_time</em><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_SMU.DummySMU.update_waiting_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the delay time between setting a bias and starting a measurement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_time</strong> – New delay time in ms.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Dummy_SMU.DummySMU.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_SMU.DummySMU.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a message to the instrument</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> – message to be sent to the instrument</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Dummy_SMU.New">
+<em class="property">class </em><code class="descclassname">Dummy_SMU.</code><code class="descname">New</code><span class="sig-paren">(</span><em>address='GPIB::20'</em>, <em>name='Dummy SMU'</em>, <em>info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Dummy_SMU.New" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standarised name for the DummySMU class</p>
+</dd></dl>
+
+<span class="target" id="module-ActonSP2500i"><span id="actonsp2500i"></span></span><dl class="class">
+<dt id="ActonSP2500i.New">
+<em class="property">class </em><code class="descclassname">ActonSP2500i.</code><code class="descname">New</code><span class="sig-paren">(</span><em>port</em>, <em>name='Acton SP2500i'</em>, <em>info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ActonSP2500i.New" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standarised name for the ActonSP2500i class</p>
+</dd></dl>
+
+<span class="target" id="module-SR830"><span id="sr830"></span></span><dl class="class">
+<dt id="SR830.New">
+<em class="property">class </em><code class="descclassname">SR830.</code><code class="descname">New</code><span class="sig-paren">(</span><em>port='GPIB::10'</em>, <em>name='SR830'</em>, <em>info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#SR830.New" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standarised name for the SR830 class</p>
+</dd></dl>
+
+<span class="target" id="module-Keithley236"><span id="keithley236"></span></span><dl class="class">
+<dt id="Keithley236.Keithley236">
+<em class="property">class </em><code class="descclassname">Keithley236.</code><code class="descname">Keithley236</code><span class="sig-paren">(</span><em>address='GPIB::20'</em>, <em>name='Keithley 236'</em>, <em>info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley236.Keithley236" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keithley 236 Source Measure Unit</p>
+<dl class="method">
+<dt id="Keithley236.Keithley236.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Keithley236.Keithley236.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the connection with the instrument</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley236.Keithley236.get_data">
+<code class="descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Keithley236.Keithley236.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>We get the data fromt he SMU. The order is always bias-meas, so we need to invert the output in order to
+have voltage-current, regardless of who is the bias or the meas. The data is a string separated by commas.
+We convert the data to an array and re-shape it in two columns.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the measured data, a tuple with two vectors: voltage and current</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley236.Keithley236.measure">
+<code class="descname">measure</code><span class="sig-paren">(</span><em>source='v'</em>, <em>start=0</em>, <em>stop=1</em>, <em>step=0.05</em>, <em>points=1</em>, <em>compliance=2</em>, <em>measRange=0</em>, <em>delay=0</em>, <em>intTime=0</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley236.Keithley236.measure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepares and triggers the IV measurement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> – ‘v’ or ‘i’ for voltage or current biasing, respectively</li>
+<li><strong>start</strong> – start bias</li>
+<li><strong>stop</strong> – stop bias</li>
+<li><strong>points</strong> – points to measure per decade in current bias mode</li>
+<li><strong>step</strong> – step size in voltage bias mode</li>
+<li><strong>compliance</strong> – meas compliance</li>
+<li><strong>measRange</strong> – the meas range as the index of self.i_range or self.v_range</li>
+<li><strong>delay</strong> – the delay between applying a bias and taking the meas</li>
+<li><strong>intTime</strong> – integration time as the index from the self.int_time list</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The estimated measuring time</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley236.Keithley236.operate_off">
+<code class="descname">operate_off</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Keithley236.Keithley236.operate_off" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn off the output of the SMU</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley236.Keithley236.operate_on">
+<code class="descname">operate_on</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Keithley236.Keithley236.operate_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn on the output of the SMU</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley236.Keithley236.query">
+<code class="descname">query</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley236.Keithley236.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a message to the instrument and then waits for an answer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> – command to be executed in the instrument</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the answer to that command</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley236.Keithley236.set_bias">
+<code class="descname">set_bias</code><span class="sig-paren">(</span><em>biasValue=0.0</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley236.Keithley236.set_bias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a bias to the source. If the source is not turned on or the function is not set to ‘dc’,
+the bias will not be applied</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>biasValue</strong> – the chosen bias</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley236.Keithley236.set_source_function">
+<code class="descname">set_source_function</code><span class="sig-paren">(</span><em>function</em>, <em>source</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley236.Keithley236.set_source_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the functionality of the source, what to bias and how to do it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>function</strong> – ‘dc’ or ‘sweep’, dc or sweep operating function</li>
+<li><strong>source</strong> – ‘v’ or ‘i’, voltage or current source</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley236.Keithley236.setup_measurement">
+<code class="descname">setup_measurement</code><span class="sig-paren">(</span><em>function='dc'</em>, <em>source='v'</em>, <em>compliance=2</em>, <em>measRange=0</em>, <em>delay=0</em>, <em>intTime=0</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley236.Keithley236.setup_measurement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepares and triggers the IV measurement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>function</strong> – ‘dc’ or ‘sweep’, dc or sweep operating function</li>
+<li><strong>source</strong> – ‘v’ or ‘i’ for voltage or current biasing, respectively</li>
+<li><strong>compliance</strong> – meas compliance</li>
+<li><strong>measRange</strong> – the meas range as the index of self.i_range or self.v_range</li>
+<li><strong>delay</strong> – the delay between applying a bias and taking the meas</li>
+<li><strong>intTime</strong> – integration time as the index from the self.int_time list</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The measured data</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley236.Keithley236.update_compliance">
+<code class="descname">update_compliance</code><span class="sig-paren">(</span><em>compliance</em>, <em>measRange</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley236.Keithley236.update_compliance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the compliance and the measurement range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>compliance</strong> – current or voltage compliance, oposite to the selected source</li>
+<li><strong>measRange</strong> – the meas range as the index of self.i_range or self.v_range</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley236.Keithley236.update_integration_time">
+<code class="descname">update_integration_time</code><span class="sig-paren">(</span><em>new_time</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley236.Keithley236.update_integration_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the integration time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_time</strong> – new integration time as the index from the self.int_time list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley236.Keithley236.update_waiting_time">
+<code class="descname">update_waiting_time</code><span class="sig-paren">(</span><em>new_time</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley236.Keithley236.update_waiting_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the delay time between setting a bias and starting a measurement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_time</strong> – New delay time in ms.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley236.Keithley236.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley236.Keithley236.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a message to the instrument</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> – message to be sent to the instrument</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Keithley236.New">
+<em class="property">class </em><code class="descclassname">Keithley236.</code><code class="descname">New</code><span class="sig-paren">(</span><em>address='GPIB::20'</em>, <em>name='Keithley 236'</em>, <em>info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley236.New" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standarised name for the Keithley236 class</p>
+</dd></dl>
+
+<span class="target" id="module-Keithley2000"><span id="keithley2000"></span></span><dl class="class">
+<dt id="Keithley2000.New">
+<em class="property">class </em><code class="descclassname">Keithley2000.</code><code class="descname">New</code><span class="sig-paren">(</span><em>port='GPIB::12'</em>, <em>name='Keithley 2000'</em>, <em>info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2000.New" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standarised name for the Keithley2000 class</p>
+</dd></dl>
+
+<span class="target" id="module-Keithley2430"><span id="keithley2430"></span></span><dl class="class">
+<dt id="Keithley2430.Keithley2430">
+<em class="property">class </em><code class="descclassname">Keithley2430.</code><code class="descname">Keithley2430</code><span class="sig-paren">(</span><em>address='GPIB::20'</em>, <em>name='Keithley 2430'</em>, <em>info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2430.Keithley2430" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keithley 2430 Source Measure Unit</p>
+<dl class="method">
+<dt id="Keithley2430.Keithley2430.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2430.Keithley2430.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the connection with the instrument</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley2430.Keithley2430.get_data">
+<code class="descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2430.Keithley2430.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>We get the data fromt he SMU. The order is always voltage-current. The data is a string separated by commas.
+We convert the data to an array and re-shape it in two columns. Depending of being a sweep or a single meas, we just
+fetch the data or read the data (which trigers the measurement and fetch the data)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the measured data, a tuple with two vectors: voltage and current</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley2430.Keithley2430.measure">
+<code class="descname">measure</code><span class="sig-paren">(</span><em>source='v'</em>, <em>start=0</em>, <em>stop=1</em>, <em>step=0.05</em>, <em>points=1</em>, <em>compliance=2</em>, <em>measRange=0</em>, <em>delay=0</em>, <em>intTime=0</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2430.Keithley2430.measure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepares and triggers the IV measurement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> – ‘v’ or ‘i’ for voltage or current biasing, respectively</li>
+<li><strong>start</strong> – start bias</li>
+<li><strong>stop</strong> – stop bias</li>
+<li><strong>points</strong> – points to measure per decade in current bias mode</li>
+<li><strong>step</strong> – step size in voltage bias mode</li>
+<li><strong>compliance</strong> – meas compliance</li>
+<li><strong>measRange</strong> – the meas range as the index of self.i_range or self.v_range</li>
+<li><strong>delay</strong> – the delay between applying a bias and taking the meas</li>
+<li><strong>intTime</strong> – integration time as the index from the self.int_time list</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The estimated measuring time</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley2430.Keithley2430.operate_off">
+<code class="descname">operate_off</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2430.Keithley2430.operate_off" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn off the output of the SMU</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley2430.Keithley2430.operate_on">
+<code class="descname">operate_on</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2430.Keithley2430.operate_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn on the output of the SMU</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley2430.Keithley2430.query">
+<code class="descname">query</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2430.Keithley2430.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a message to the instrument and then waits for an answer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> – command to be executed in the instrument</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the answer to that command</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley2430.Keithley2430.set_bias">
+<code class="descname">set_bias</code><span class="sig-paren">(</span><em>biasValue=0.0</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2430.Keithley2430.set_bias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a bias to the source. If the source is not turned on or the function is not set to ‘dc’,
+the bias will not be applied</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>biasValue</strong> – the chosen bias</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley2430.Keithley2430.set_source_function">
+<code class="descname">set_source_function</code><span class="sig-paren">(</span><em>function</em>, <em>source</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2430.Keithley2430.set_source_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the functionality of the source, what to bias, what to measure and a few limits.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>function</strong> – ‘dc’ or ‘sweep’, dc or sweep operating function</li>
+<li><strong>source</strong> – ‘v’ or ‘i’, voltage or current source</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley2430.Keithley2430.setup_measurement">
+<code class="descname">setup_measurement</code><span class="sig-paren">(</span><em>function='dc'</em>, <em>source='v'</em>, <em>compliance=0.1</em>, <em>measRange=0</em>, <em>delay=0</em>, <em>intTime=0</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2430.Keithley2430.setup_measurement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepares and triggers the IV measurement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>function</strong> – ‘dc’ or ‘sweep’, dc or sweep operating function</li>
+<li><strong>source</strong> – ‘v’ or ‘i’ for voltage or current biasing, respectively</li>
+<li><strong>compliance</strong> – meas compliance</li>
+<li><strong>measRange</strong> – the meas range as the index of self.i_range or self.v_range</li>
+<li><strong>delay</strong> – the delay between applying a bias and taking the meas</li>
+<li><strong>intTime</strong> – integration time as the index from the self.int_time list</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The measured data</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley2430.Keithley2430.update_compliance">
+<code class="descname">update_compliance</code><span class="sig-paren">(</span><em>compliance</em>, <em>measRange</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2430.Keithley2430.update_compliance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the compliance and the measurement range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>compliance</strong> – current or voltage compliance, oposite to the selected source</li>
+<li><strong>measRange</strong> – the meas range as the index of self.i_range or self.v_range</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley2430.Keithley2430.update_integration_time">
+<code class="descname">update_integration_time</code><span class="sig-paren">(</span><em>new_time</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2430.Keithley2430.update_integration_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the integration time. This source needs as input the integration rate, refered to the line frequency
+which is 50 Hz. We calculate it based on the selected integration time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_time</strong> – new integration time as the index from the self.int_time list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley2430.Keithley2430.update_waiting_time">
+<code class="descname">update_waiting_time</code><span class="sig-paren">(</span><em>new_time</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2430.Keithley2430.update_waiting_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the delay time between setting a bias and starting a measurement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_time</strong> – New delay time in ms.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Keithley2430.Keithley2430.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2430.Keithley2430.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a message to the instrument</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> – message to be sent to the instrument</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Keithley2430.New">
+<em class="property">class </em><code class="descclassname">Keithley2430.</code><code class="descname">New</code><span class="sig-paren">(</span><em>address='GPIB::20'</em>, <em>name='Keithley 2430'</em>, <em>info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#Keithley2430.New" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standarised name for the Keithley2430 class</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Experiments.html">Experiments and complements</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Devices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#devices-dependencies">Devices dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-add-a-new-device">How to add a new device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#details-of-configured-devices">Details of configured devices</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Experiments.html"
+                        title="previous chapter">Experiments and complements</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Devices.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Experiments.html" title="Experiments and complements"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Mordor 2.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015, D. Alonso-Álvarez.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

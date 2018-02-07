@@ -1,0 +1,630 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Experiments and complements &#8212; Mordor 2.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/mordor_icon_small.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Devices" href="Devices.html" />
+    <link rel="prev" title="Welcome to Mordor’s documentation!" href="index.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+<div class="header" role="banner">
+  <div class="logo">
+    <a href="index.html">
+      <img class="logo" src="_static/mordor_icon_medium.ico" alt="Logo"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Devices.html" title="Devices"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Mordor’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Mordor 2.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="experiments-and-complements">
+<h1>Experiments and complements<a class="headerlink" href="#experiments-and-complements" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="how-to-add-a-new-experiment">
+<h2>How to add a new experiment<a class="headerlink" href="#how-to-add-a-new-experiment" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-spectroscopy">
+<span id="existing-experiments"></span><h2>Existing experiments<a class="headerlink" href="#module-spectroscopy" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="spectroscopy.Spectroscopy">
+<em class="property">class </em><code class="descclassname">spectroscopy.</code><code class="descname">Spectroscopy</code><span class="sig-paren">(</span><em>master</em>, <em>devman</em><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for spectroscopy experiments</p>
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.clear_background">
+<code class="descname">clear_background</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.clear_background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the background when using the spectrometer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.create_menu_bar">
+<code class="descname">create_menu_bar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.create_menu_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add elememnts to the master menubar</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.fill_devices">
+<code class="descname">fill_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.fill_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fills the device selectors with the corresponding type of devices</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.finish_live">
+<code class="descname">finish_live</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.finish_live" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finish the live adquisition, returning the front end to the scan mode</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.finish_scan">
+<code class="descname">finish_scan</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.finish_scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finish the scan, updating some global variables, saving the data in the temp file and offering to save the
+data somewhere else.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.get_background">
+<code class="descname">get_background</code><span class="sig-paren">(</span><em>meas_bg=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.get_background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the background when using the spectrometer, if requested.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameter:</th><td class="field-body">meas_bg     True or False: wether to measure a background or just produce a bg with zeros</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.goto">
+<code class="descname">goto</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.goto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Go to the specified wavelength</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.live_lockin">
+<code class="descname">live_lockin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.live_lockin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the live lock-in adquisition</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.live_spectrometer">
+<code class="descname">live_spectrometer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.live_spectrometer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the live spectrometer adquisition</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.mode_lockin">
+<code class="descname">mode_lockin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.mode_lockin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the next data point in a scan. This function depends on the adquisition device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.mode_spectrometer">
+<code class="descname">mode_spectrometer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.mode_spectrometer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the whole spectrum at once recorded by the spectrometer in the range selected</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.new_batch">
+<code class="descname">new_batch</code><span class="sig-paren">(</span><em>batch_mode</em><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.new_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows current batch window or, if a different batch is chosen, destroys the old one and creates a new one
+for the new batch mpde</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>batch_mode</strong> – the selected type of batch</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.null">
+<code class="descname">null</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.null" title="Permalink to this definition">¶</a></dt>
+<dd><p>Empty function that does nothing</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.pause_live">
+<code class="descname">pause_live</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.pause_live" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pauses a live recording or resumes the adquisition</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.pause_scan">
+<code class="descname">pause_scan</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.pause_scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pauses an scan or resumes the adquisition</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.prepare_live_lockin">
+<code class="descname">prepare_live_lockin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.prepare_live_lockin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepares the lock-in live adquisition and prepare some variables</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.prepare_live_spectrometer">
+<code class="descname">prepare_live_spectrometer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.prepare_live_spectrometer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepares the spectrometer live adquisition and prepare some variables</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.prepare_scan_lockin">
+<code class="descname">prepare_scan_lockin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.prepare_scan_lockin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Any scan is divided in three stages:
+1) Prepare the conditions of the scan (this function), getting starting point, integration time and creating all relevant variables.
+2) Runing the scan, performed by a recursive function  “mode_spectrometer” or “mode_lockin”
+3) Finish the scan, where we update some variables and save the data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.prepare_scan_spectrometer">
+<code class="descname">prepare_scan_spectrometer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.prepare_scan_spectrometer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Any scan is divided in three stages:
+1) Prepare the conditions of the scan (this function), getting starting point, integration time and creating all relevant variables.
+2) Runing the scan, performed by a recursive function “mode_spectrometer” or “mode_lockin”
+3) Finish the scan, where we update some variables and save the data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.quit">
+<code class="descname">quit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.quit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Safe closing of the devices. The devices must be closed by the Device Manager, not directly,
+so they are registered as “free”.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.record_live">
+<code class="descname">record_live</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.record_live" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts and stops a live recording.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.scan_running">
+<code class="descname">scan_running</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.scan_running" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the graphical interface, disable the buttoms that must be disabled during the measurement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.scan_stopped">
+<code class="descname">scan_stopped</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.scan_stopped" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the graphical interface to normal once the measurement has finished.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.select_adquisition">
+<code class="descname">select_adquisition</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.select_adquisition" title="Permalink to this definition">¶</a></dt>
+<dd><p>When the adquisition selector changes, this function updates some variables and the graphical interface
+to adapt it to the selected device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> – Dummy variable that does nothing but must exist (?)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.start_stop_scan">
+<code class="descname">start_stop_scan</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.start_stop_scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts and stops an scan</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.update_integration_time">
+<code class="descname">update_integration_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.update_integration_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the integration time</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spectroscopy.Spectroscopy.update_waiting_time">
+<code class="descname">update_waiting_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spectroscopy.Spectroscopy.update_waiting_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the waiting time</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-iv"></span><dl class="class">
+<dt id="iv.IV">
+<em class="property">class </em><code class="descclassname">iv.</code><code class="descname">IV</code><span class="sig-paren">(</span><em>master</em>, <em>devman</em>, <em>in_batch=False</em><span class="sig-paren">)</span><a class="headerlink" href="#iv.IV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for IV experiments</p>
+<dl class="method">
+<dt id="iv.IV.create_menu_bar">
+<code class="descname">create_menu_bar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#iv.IV.create_menu_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add elememnts to the master menubar</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="iv.IV.fill_devices">
+<code class="descname">fill_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#iv.IV.fill_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fills the device selectors with the corresponding type of devices</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="iv.IV.finish_scan">
+<code class="descname">finish_scan</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#iv.IV.finish_scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finish the scan, updating some global variables, saving the data in the temp file and offering to save the
+data somewhere else.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="iv.IV.mode">
+<code class="descname">mode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#iv.IV.mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>When the bias mode is changed, this function updates some internal variables and the graphical interface</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="iv.IV.new_batch">
+<code class="descname">new_batch</code><span class="sig-paren">(</span><em>batch_mode</em><span class="sig-paren">)</span><a class="headerlink" href="#iv.IV.new_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows current batch window or, if a different batch is chosen, destroys the old one and creates a new one
+for the new batch mpde</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>batch_mode</strong> – the selected type of batch</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="iv.IV.prepare_scan">
+<code class="descname">prepare_scan</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#iv.IV.prepare_scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Any scan is divided in three stages:
+1) Prepare the conditions of the scan (this function), getting starting point, integration time and creating all relevant variables.
+2) Runing the scan, performed by a recursive function “get_next_datapoint”
+3) Finish the scan, where we update some variables and save the data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="iv.IV.quit">
+<code class="descname">quit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#iv.IV.quit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Safe closing of the devices. The devices must be closed by the Device Manager, not directly,
+so they are registered as “free”.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="iv.IV.select_smu">
+<code class="descname">select_smu</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#iv.IV.select_smu" title="Permalink to this definition">¶</a></dt>
+<dd><p>When the SMU selector changes, this function updates some variables and the graphical interface
+to adapt it to the selected device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> – Dummy variable that does nothing but must exist (?)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="iv.IV.start_stop_scan">
+<code class="descname">start_stop_scan</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#iv.IV.start_stop_scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts and stops an scan</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="iv.IV.update_compliance_and_range">
+<code class="descname">update_compliance_and_range</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#iv.IV.update_compliance_and_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the value of the variables compliance and meas_range. Information IS NOT sent to the instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="iv.IV.update_integration_time">
+<code class="descname">update_integration_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#iv.IV.update_integration_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the value of the integration time. Informtaion IS sent to the instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="iv.IV.update_waiting_time">
+<code class="descname">update_waiting_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#iv.IV.update_waiting_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the value of the delay between applying a bias and taking the measurement. Informtaion IS sent to the instrument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="batch-complements">
+<h2>Batch complements<a class="headerlink" href="#batch-complements" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Experiments and complements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-add-a-new-experiment">How to add a new experiment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-spectroscopy">Existing experiments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#batch-complements">Batch complements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Devices.html">Devices</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Mordor’s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Devices.html"
+                        title="next chapter">Devices</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Experiments.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Devices.html" title="Devices"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Mordor’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Mordor 2.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015, D. Alonso-Álvarez.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>

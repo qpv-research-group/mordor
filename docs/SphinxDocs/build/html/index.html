@@ -1,0 +1,177 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Welcome to Mordor’s documentation! &#8212; Mordor 2.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/mordor_icon_small.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Experiments and complements" href="Experiments.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+<div class="header" role="banner">
+  <div class="logo">
+    <a href="#">
+      <img class="logo" src="_static/mordor_icon_medium.ico" alt="Logo"/>
+    </a>
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Experiments.html" title="Experiments and complements"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Mordor 2.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-mordor-s-documentation">
+<h1>Welcome to Mordor’s documentation!<a class="headerlink" href="#welcome-to-mordor-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Mordor is a hardware manager and data adquisition software developed at the Quantum Photovoltaics Group (QPV) to simplify the execution of common experiments and the implementation of new ones. It is also designed to be simple to mantain and to expand by any user with some knowledge of Python. The idea is that, if the main developer leaves the group, the software will be easy to maintain and update acording to the group needs and the inevitable upgrades of computers and operative systems.</p>
+<p>Currently supported features are:</p>
+<ol class="arabic simple">
+<li><dl class="first docutils">
+<dt><strong>Spectroscopy measurements</strong></dt>
+<dd>Single scan measurements or in batch mode.<ul class="last">
+<li>Versus voltage or current</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>IV measurements</strong></dt>
+<dd>Single scan measurements versus voltage or current.</dd>
+</dl>
+</li>
+</ol>
+<p>For the sake of simplicity, <em>Mordor</em> does not control all options of the hardware it can use, just those that:</p>
+<ul class="simple">
+<li>are esential to automate the measuring process, such as changing the wavelength of a monochromator or getting the measured data from a spectrometer,</li>
+<li>are too obscure to change directly in the aparatus, as the integration time of a SMU,</li>
+<li>can not be modified otherwise, like changing the grating of a monochromator, which can only be done by means of software.</li>
+</ul>
+<p>Of course, nothing prevents future developers to add all the missing options, but that is not the spirit of <em>Mordor</em>.</p>
+<p>Using <em>Mordor</em> is quite straigth forward, so this documentation is more focused on describing how it works internally and how to expand it with new hardware or new experiments.</p>
+<div class="section" id="contents">
+<h2>Contents:<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Experiments.html">Experiments and complements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Experiments.html#how-to-add-a-new-experiment">How to add a new experiment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Experiments.html#module-spectroscopy">Existing experiments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Experiments.html#batch-complements">Batch complements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Devices.html">Devices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Devices.html#devices-dependencies">Devices dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Devices.html#how-to-add-a-new-device">How to add a new device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Devices.html#details-of-configured-devices">Details of configured devices</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="#">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Experiments.html">Experiments and complements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Devices.html">Devices</a></li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Experiments.html"
+                        title="next chapter">Experiments and complements</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Experiments.html" title="Experiments and complements"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Mordor 2.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015, D. Alonso-Álvarez.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+    </div>
+  </body>
+</html>
