@@ -32,8 +32,8 @@ class Spectroscopy:
                             'xlabel' : 'Wavelength (nm)',
                             'Ch1_ylabel' : 'Ch-1',
                             'Ch2_ylabel' : 'Ch-2',
-                            'Ch1_scale' : 'lin',
-                            'Ch2_scale' : 'lin'}
+                            'Ch1_scale' : 'linear',
+                            'Ch2_scale' : 'linear'}
 
         # We load the dummy devices by default
         self.fill_devices()
