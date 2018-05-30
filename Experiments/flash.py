@@ -1,0 +1,445 @@
+__author__ = 'Diego Alonso-Álvarez'
+
+# Libraries
+import datetime
+
+import matplotlib
+matplotlib.use('TkAgg')
+import matplotlib.pyplot as plt
+from matplotlib import gridspec
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
+
+from tkinter import filedialog, ttk
+import tkinter as tk
+
+import time
+import sys
+import os
+
+import numpy as np
+
+# Class definition
+class Flash(object):
+    """ Some text
+    """
+    def __init__(self, splash, devman, exp_number, Save):
+
+        self.dm = devman
+        self.experiment_number = exp_number
+        self.splash = splash
+
+        self.create_interface()
+
+        self.all_data = []
+        self.save = Save(self.window)
+
+        # We load the dummy devices by default
+        self.fill_devices()
+
+    def _quit(self):
+        self.dm.close_device(self.adquisition)
+        self.dm.close_device(self.trigger)
+        self.window.destroy()
+        self.splash.show(minus_experiment=True)
+
+    def reset(self):
+        self.temperature_array = [0]
+
+    def save_data(self):
+        """ Opens a dialog to save the selected data
+
+        :return: None
+        """
+
+        out_flash = []
+        for d in self.all_data:
+            out_flash = out_flash + d.T.tolist()
+        self.save.show((np.array(out_flash).T, self.IV), ('', 'Voltage (V)\tCurrent (mA)'), ('flash', 'iv'))
+
+    def select_trigger(self, *args):
+
+        if self.trigger is not None:
+            self.dm.close_device(self.trigger)
+
+        dev_name = self.trigger_var.get()
+        self.trigger = self.dm.open_device(dev_name)
+
+        if self.trigger is None:
+            self.trigger_box.current(0)
+            self.control = self.dm.open_device(self.trigger_var.get())
+
+        self.meas_trigger_box['values'] = self.trigger.digital_output
+        self.meas_trigger_box.current(13)
+
+
+    def select_adquisition(self, *args):
+
+        if self.adquisition is not None:
+            self.dm.close_device(self.adquisition)
+
+        dev_name = self.adquisition_var.get()
+        self.adquisition = self.dm.open_device(dev_name)
+
+        if self.adquisition is None:
+            self.adquisition_box.current(0)
+            self.control = self.dm.open_device(self.adquisition_var.get())
+
+        self.ref_channel_box['values'] = self.adquisition.available_channels
+        self.ref_channel_box.current(0)
+        self.I_channel_box['values'] = self.adquisition.available_channels
+        self.I_channel_box.current(1)
+        self.V_channel_box['values'] = self.adquisition.available_channels
+        self.V_channel_box.current(2)
+        self.oscilloscope_trigger_box['values'] = self.adquisition.available_channels
+        self.oscilloscope_trigger_box.current(3)
+
+    def run(self, current_shot=1, single=False):
+
+        if (current_shot == 1) and (not single):
+            self.clear_plot()
+
+        # First we collect all the input settings from the front end
+        ref_res = float(self.ref_resistance_var.get())
+        ref_Isc = float(self.ref_Isc_var.get())
+        sig_res = float(self.dut_resistance_var.get())
+
+        ref_chan = int(self.ref_channel_var.get())
+        I_chan = int(self.I_channel_var.get())
+        V_chan = int(self.V_channel_var.get())
+        trig_chan = int(self.meas_trigger_var.get())
+
+        delay = self.trig_delay_var.get()/1000.0
+        rate = float(self.sampling_rate_var.get())
+        tmax = self.time_var.get()  # µs
+        time_per_sample = 1e6/rate  # µs
+        samples = int(tmax/time_per_sample)
+        tmax = samples * time_per_sample        # We recalculate tmax so it is a multiple of the number of points
+        times = np.linspace(0, tmax, samples)  # µs
+
+        # Next we update the configuration of the oscilloscope
+        self.adquisition.set_sampling_rate(rate)
+        self.adquisition.set_number_samples(samples)
+        self.adquisition.set_meas_ready()
+
+        # Everithing is ready, so we trigger the measurement, adding some delay between the trigger of the adquisition and the flash
+        self.adquisition.trigger()
+        time.sleep(delay)
+        self.trigger.pulse(trig_chan, 200)        
+        self.record = self.adquisition.collect_data()
+
+        # Add the time to the experimental data
+        self.record = np.hstack((times[:, None], self.record))
+
+        # Convert the voltage across the resistor of the reference into concentration
+        self.record[:, ref_chan] = -1000*self.record[:, ref_chan]/(ref_res*ref_Isc)
+        # Convert the voltage across the signal resistor into current in mA
+        self.record[:, I_chan] = 1000*self.record[:, I_chan]/sig_res
+        # Convert the voltage to possitive
+        self.record[:, V_chan] = -self.record[:, V_chan]
+
+        self.all_data.append(self.record)
+        self.update_plot(times, self.record[:, I_chan], self.record[:, V_chan], self.record[:, ref_chan])
+
+        if current_shot < self.shots_var.get():
+            self.splash.splashroot.after(self.wait_var.get()*1000, self.run, current_shot+1)
+
+        else:
+            print('Finish!!')
+
+            # If not in single shot, we average all the data and offer to save it
+            if not single:
+                self.record = np.zeros_like(self.record)
+                for record in self.all_data:
+                    self.record = self.record + record
+
+                self.record = self.record / len(self.all_data)
+                self.update_plot(times, self.record[:, I_chan], self.record[:, V_chan], self.record[:, ref_chan])
+
+                self.update_IV()
+                self.save_data()
+
+            else:
+                self.update_IV()
+
+
+    def update_IV(self, *args):
+
+        start = self.start_var.get()
+        stop = self.stop_var.get()
+
+        start_idx = np.argmin(abs(self.record[:, 0] - start))
+        stop_idx = np.argmin(abs(self.record[:, 0] - stop))
+
+        I_chan = int(self.I_channel_var.get())
+        V_chan = int(self.V_channel_var.get())
+
+        I = self.record[start_idx:stop_idx, I_chan]
+        V = self.record[start_idx:stop_idx, V_chan]
+
+        self.IV = np.vstack((V, I)).T
+
+        self.Ch1.plot(V, I)
+        self.canvas.draw()
+
+
+    def fill_devices(self):
+        """ Fills the device selectors with the corresponding type of devices
+
+        :return:
+        """
+
+        # Trigger
+        self.trigger_box['values'] = self.dm.get_devices(['ADC-DAC'])
+        self.trigger_box.current(0)
+
+        self.trigger = None
+        self.select_trigger()
+
+        # Oscilloscope
+        self.adquisition_box['values'] = self.dm.get_devices(['Oscilloscope'])
+        self.adquisition_box.current(0)
+
+        self.adquisition = None
+        self.select_adquisition()
+
+    def create_menu_bar(self):
+        """ Creates the menu bar and the elements within
+        """
+        self.menubar = tk.Menu(self.window)
+        self.window['menu'] = self.menubar
+
+        self.menu_file = tk.Menu(self.menubar)
+        self.menu_hardware = tk.Menu(self.menubar)
+        self.menu_help = tk.Menu(self.menubar)
+        self.menubar.add_cascade(menu=self.menu_file, label='File')
+        self.menubar.add_cascade(menu=self.menu_hardware, label='Hardware')
+        self.menubar.add_cascade(menu=self.menu_help, label='Help')
+
+        # File menus
+        self.menu_file.add_command(label='New experiment', command=self.open_new_experiment)
+        self.menu_file.add_command(label='Save record', command=self.save_data)
+        self.menu_file.add_separator()
+        self.menu_file.add_command(label='Leave Mordor', command=self._quit)
+
+        # Hardware menu
+        self.menu_hardware.add_command(label='Hardware configuration', command=self.dm.show)
+        self.menu_hardware.add_separator()
+
+        # Help menu
+        self.menu_help.add_command(label='Documentation', command=self.open_documentation)
+
+    def open_new_experiment(self):
+        """ Opens the splash screen to run a new experiment, in paralel to the current one
+
+        :return: None
+        """
+
+        self.splash.show()
+
+    def open_documentation(self):
+        """ Opens the documentation in the web browser
+
+        :return: None
+        """
+        import webbrowser
+        address = 'file:' + os.path.join(sys.path[0], 'Doc', 'Mordor.html')
+        webbrowser.open_new_tab(address)
+
+    def create_interface(self):
+
+        # Top level elements
+        self.window = tk.Toplevel(self.splash.splashroot)
+        self.window.geometry('+100+100')
+        # self.window.resizable(False, False)
+        self.window.protocol('WM_DELETE_WINDOW', self._quit)  # Used to force a "safe closing" of the program
+        self.window.option_add('*tearOff', False)  # Prevents tearing the menus
+        self.window.title('Cirith Ungol: Mordor\'s flash solar simulator')
+
+        self.create_menu_bar()
+
+        # Creates the main frame
+        plot_frame = ttk.Frame(master=self.window, padding=(5, 5, 5, 5))
+        control_frame = ttk.Frame(master=self.window, padding=(15, 15, 15, 15))
+        plot_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=1)
+        control_frame.pack(side=tk.LEFT, fill=tk.Y, expand=0)
+
+        # Create plot area
+        self.create_plot_area(plot_frame)
+
+        # Create the elements in the control panel
+        # Hardware widgets
+        hardware_frame = ttk.Labelframe(control_frame, text='Selected hardware:', padding=(0, 5, 0, 15))
+        hardware_frame.columnconfigure(0, weight=1)
+        hardware_frame.grid(column=0, row=0, sticky=(tk.EW))
+
+        self.trigger_var = tk.StringVar()
+        self.trigger_box = ttk.Combobox(master=hardware_frame, textvariable=self.trigger_var, state="readonly")
+        self.trigger_box.bind('<<ComboboxSelected>>', self.select_trigger)
+        self.trigger_box.grid(column=0, row=0, sticky=(tk.EW))
+
+        self.adquisition_var = tk.StringVar()
+        self.adquisition_box = ttk.Combobox(master=hardware_frame, textvariable=self.adquisition_var, state="readonly")
+        self.adquisition_box.bind('<<ComboboxSelected>>', self.select_adquisition)
+        self.adquisition_box.grid(column=0, row=1, sticky=(tk.EW))
+
+        # Reference frame
+        reference_frame = ttk.Labelframe(control_frame, text='Reference:', padding=(5, 5, 5, 15))
+        reference_frame.grid(column=0, row=1, sticky=(tk.NSEW))
+        reference_frame.rowconfigure(1, weight=1)
+        reference_frame.columnconfigure(0, weight=1)
+
+        self.ref_channel_var = tk.StringVar()
+        ttk.Label(master=reference_frame, text='Reference channel:').grid(column=0, row=0, sticky=tk.EW)
+        self.ref_channel_box = ttk.Combobox(master=reference_frame, width=10, textvariable=self.ref_channel_var, state="readonly")
+        self.ref_channel_box.grid(column=1, row=0, sticky=(tk.EW))
+
+        self.ref_resistance_var = tk.StringVar()
+        self.ref_resistance_var.set(1)
+        ttk.Label(master=reference_frame, text="Resistance (Ω):").grid(column=0, row=1, sticky=tk.EW)
+        ttk.Entry(master=reference_frame, width=10, textvariable=self.ref_resistance_var).grid(column=1, row=1, sticky=tk.EW)
+
+        self.ref_Isc_var = tk.StringVar()
+        self.ref_Isc_var.set(1)
+        ttk.Label(master=reference_frame, text="Isc at 1 sun (mA):").grid(column=0, row=2, sticky=tk.EW)
+        ttk.Entry(master=reference_frame, width=10, textvariable=self.ref_Isc_var).grid(column=1, row=2, sticky=tk.EW)
+
+        # Signal frame
+        signal_frame = ttk.Labelframe(master=control_frame, text='Signal:', padding=(5, 5, 5, 15))
+        signal_frame.grid(column=0, row=2, sticky=(tk.NSEW))
+        signal_frame.rowconfigure(1, weight=1)
+        signal_frame.columnconfigure(0, weight=1)
+
+        self.I_channel_var = tk.StringVar()
+        ttk.Label(master=signal_frame, text="I channel:").grid(column=0, row=0, sticky=tk.EW)
+        self.I_channel_box = ttk.Combobox(master=signal_frame, width=10, textvariable=self.I_channel_var, state="readonly")
+        self.I_channel_box.grid(column=1, row=0, sticky=(tk.EW))
+
+        self.V_channel_var = tk.StringVar()
+        ttk.Label(master=signal_frame, text="V channel:").grid(column=0, row=1, sticky=tk.EW)
+        self.V_channel_box = ttk.Combobox(master=signal_frame, width=10, textvariable=self.V_channel_var, state="readonly")
+        self.V_channel_box.grid(column=1, row=1, sticky=(tk.EW))
+
+        self.dut_resistance_var = tk.StringVar()
+        self.dut_resistance_var.set(1)
+        ttk.Label(master=signal_frame, text="Resistance (Ω):").grid(column=0, row=2, sticky=tk.EW)
+        ttk.Entry(master=signal_frame, width=10, textvariable=self.dut_resistance_var).grid(column=1, row=2, sticky=tk.EW)
+
+        # Measurement frame
+        meas_frame = ttk.Labelframe(master=control_frame, text='Measurement:', padding=(5, 5, 5, 15))
+        meas_frame.grid(column=0, row=3, sticky=(tk.NSEW))
+        meas_frame.rowconfigure(1, weight=1)
+        meas_frame.columnconfigure(0, weight=1)
+
+        self.shots_var = tk.IntVar()
+        self.shots_var.set(10)
+        self.wait_var = tk.IntVar()
+        self.wait_var.set(3)
+        self.start_var = tk.IntVar()
+        self.start_var.set(0)
+        self.stop_var = tk.IntVar()
+        self.stop_var.set(200)
+
+        ttk.Label(master=meas_frame, text="Shots to average:").grid(column=0, row=0, sticky=tk.EW)
+        ttk.Label(master=meas_frame, text="Wait between shots (s):").grid(column=0, row=1, sticky=tk.EW)
+        ttk.Label(master=meas_frame, text="Start signal (µs):").grid(column=0, row=2, sticky=tk.EW)
+        ttk.Label(master=meas_frame, text="Stop signal (µs):").grid(column=0, row=3, sticky=tk.EW)
+
+        ttk.Entry(master=meas_frame, width=10, textvariable=self.shots_var).grid(column=1, row=0, sticky=tk.EW)
+        ttk.Entry(master=meas_frame, width=10, textvariable=self.wait_var).grid(column=1, row=1, sticky=tk.EW)
+        ttk.Entry(master=meas_frame, width=10, textvariable=self.start_var).grid(column=1, row=2, sticky=tk.EW)
+        ttk.Entry(master=meas_frame, width=10, textvariable=self.stop_var).grid(column=1, row=3, sticky=tk.EW)
+
+        ttk.Button(master=meas_frame, width=10, text="Update IV:", command=self.update_IV)\
+            .grid(column=0, row=4, columnspan=2, sticky=tk.EW)
+
+        # Run frame
+        run_frame = ttk.Labelframe(master=control_frame, text='Run:', padding=(5, 5, 5, 15))
+        run_frame.grid(column=0, row=4, sticky=(tk.NSEW))
+        run_frame.rowconfigure(1, weight=1)
+        run_frame.columnconfigure(0, weight=1)
+
+        self.meas_trigger_var = tk.StringVar()
+        ttk.Label(master=run_frame, text="Meas trigger channel:").grid(column=0, row=0, sticky=tk.EW)
+        self.meas_trigger_box = ttk.Combobox(master=run_frame, width=10, textvariable=self.meas_trigger_var, state="readonly")
+        self.meas_trigger_box.grid(column=1, row=0, sticky=(tk.EW))
+
+        self.oscilloscope_trigger_var = tk.StringVar()
+        ttk.Label(master=run_frame, text="Osc. trigger channel:").grid(column=0, row=1, sticky=tk.EW)
+        self.oscilloscope_trigger_box = ttk.Combobox(master=run_frame, width=10, textvariable=self.oscilloscope_trigger_var, state="readonly")
+        self.oscilloscope_trigger_box.grid(column=1, row=1, sticky=(tk.EW))
+
+        self.sampling_rate_var = tk.StringVar()
+        self.sampling_rate_var.set(10e5)
+        self.time_var = tk.IntVar()
+        self.time_var.set(10000)
+        self.trig_delay_var = tk.IntVar()
+        self.trig_delay_var.set(100)
+
+        ttk.Label(master=run_frame, text="Sampling rate (hz):").grid(column=0, row=2, sticky=tk.EW)
+        ttk.Label(master=run_frame, text="Adquisition time (µs):").grid(column=0, row=3, sticky=tk.EW)
+        ttk.Label(master=run_frame, text="Trigger delay (ms):").grid(column=0, row=4, sticky=tk.EW)
+
+        ttk.Entry(master=run_frame, width=10, textvariable=self.sampling_rate_var).grid(column=1, row=2, sticky=tk.EW)
+        ttk.Entry(master=run_frame, width=10, textvariable=self.time_var).grid(column=1, row=3, sticky=tk.EW)
+        ttk.Entry(master=run_frame, width=10, textvariable=self.trig_delay_var).grid(column=1, row=4, sticky=tk.EW)
+
+        ttk.Button(master=run_frame, width=10, text="Single shot", command=lambda: self.run(self.shots_var.get(), True))\
+            .grid(column=0, row=5, sticky=tk.EW)
+        ttk.Button(master=run_frame, width=10, text="Run all", command=lambda: self.run())\
+            .grid(column=1, row=5, sticky=tk.EW)
+        ttk.Button(master=run_frame, width=10, text="Clear", command=self.clear_plot)\
+            .grid(column=0, row=6, columnspan=2, sticky=tk.EW)
+
+    def create_plot_area(self, frame):
+        """ Creates the plotting area and the ploting variables.
+        """
+        self.f = plt.figure(figsize=(9, 8), dpi=72)
+        gs = gridspec.GridSpec(5, 1, height_ratios=[3, 0.5, 1, 1, 1])
+        gs.update(hspace=0.2)
+
+        self.Ch1 = plt.subplot(gs[0], ylabel='Current (mA)', xlabel='Voltage (V)')
+        self.Ch4 = plt.subplot(gs[4], ylabel='X (suns)', xlabel='Time (µs)')
+        self.Ch2 = plt.subplot(gs[2], ylabel='Current (mA)', sharex=self.Ch4)
+        self.Ch3 = plt.subplot(gs[3], ylabel='Voltage (V)', sharex=self.Ch4)
+
+        self.Ch1.grid(True, color='gray')  # This is the grid of the plot, not the placing comand
+        self.Ch2.grid(True, color='gray')
+        self.Ch3.grid(True, color='gray')
+        self.Ch4.grid(True, color='gray')
+        # self.Ch2.set_xticklabels([])
+        # self.Ch3.set_xticklabels([])
+        plt.setp(self.Ch2.get_xticklabels(), visible=False)
+        plt.setp(self.Ch3.get_xticklabels(), visible=False)
+
+        self.canvas = FigureCanvasTkAgg(self.f, frame)
+        self.canvas.get_tk_widget().pack()
+        self.canvas.show()
+
+        toolbar = NavigationToolbar2TkAgg(self.canvas, frame)
+        toolbar.update()
+        self.canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+
+    def clear_plot(self, *args):
+
+        self.Ch1.lines = []
+        self.Ch2.lines = []
+        self.Ch3.lines = []
+        self.Ch4.lines = []
+
+        self.all_data = []
+
+        self.canvas.draw()
+
+    def update_plot(self, times, Ch2, Ch3, Ch4):
+
+        self.Ch2.plot(times, Ch2)
+        self.Ch3.plot(times, Ch3)
+        self.Ch4.plot(times, Ch4)
+
+        self.Ch4.set_xlim([0, max(times)])
+        self.Ch4.set_ylim([min(Ch4), max(Ch4)])
+        self.Ch2.set_ylim([min(Ch2), max(Ch2)])
+        self.Ch3.set_ylim([min(Ch3), max(Ch3)])
+
+        self.canvas.draw()
+
