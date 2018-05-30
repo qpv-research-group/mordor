@@ -38,6 +38,22 @@ def update(subplot, ydata, xdata=None, idx=-1):
 
     return 0
 
+def update_labels(subplot, xlabel, ylabel):
+    subplot.set_xlabel(xlabel)
+    subplot.set_ylabel(ylabel)
+	
+def update_yscales(subplot, Y_scale):
+    try:
+        subplot.set_yscale(Y_scale)
+    except Exception:
+        print('Error in axis scale argument')
+        
+def update_xscales(subplot, X_scale):
+    try:
+        subplot.set_xscale(X_scale)
+    except Exception:
+        print('Error in axis scale argument')
+    
 
 def clear(subplot, xtitle=None, xticks='on', ytitle=None, yticks='on'):
     """ Clears the subplot of any plot, changes the axis labels and ticks, if necessary, and reset the scale to the default values.

@@ -32,7 +32,7 @@ class IV:
                             'Ch1_ylabel': 'Abs(Current) (A)',
                             'Ch2_ylabel': 'Current (A)',
                             'Ch1_scale': 'log',
-                            'Ch2_scale': 'lin'}
+                            'Ch2_scale': 'linear'}
 
         # We load the dummy devices by default
         self.fill_devices()

@@ -1,7 +1,7 @@
 ﻿__author__ = 'Diego Alonso-Álvarez'
 __version__= '2.0_beta_4'
 __email__ = 'd.alonso-alvarez@imperial.ac.uk'
-__contributors__ = ['Markus Furher', 'Ture Hinrichsen', 'Jose Videira', 'Tomos Thomas', 'Thomas Wilson']
+__contributors__ = ['Markus Furher', 'Ture Hinrichsen', 'Jose Videira', 'Tomos Thomas', 'Thomas Wilson', 'Andrew M. Telford']
 
 import matplotlib
 matplotlib.use('TkAgg')
@@ -21,9 +21,8 @@ from tkinter import font
 
 import plot_utils as pu
 import tools
-from Experiments import Spectroscopy, IV, Temperature, Flash
+from Experiments import Spectroscopy, IV, Temperature, Flash, CV
 from Devices import device_manager
-
 
 class Mordor(object):
     """ This class is the core of Mordor. It controls the ploting and saving of the data in the different experiments
@@ -169,7 +168,9 @@ class Mordor(object):
 
         :return: None
         """
-
+        if self.experiment.id == 'CV':
+            self.experiment.update_header() ## This updates the file's header
+            
         self.save.show((self.selected_meas,), (self.experiment.header,), (self.experiment.extension,))
 
     def open_new_experiment(self):
@@ -189,23 +190,30 @@ class Mordor(object):
         address = 'file:' + os.path.join(sys.path[0], 'Doc', 'Mordor.html')
         webbrowser.open_new_tab(address)
 
-    def create_plot_area(self, format):
+    def create_plot_area(self, plot_format):
         """ Creates the plotting area. Its look and feel depends on the experiment.
         """
+        ratios = plot_format['ratios']
 
-        ratios = format['ratios']
-        xlabel = format['xlabel']
-        Ch1_ylabel = format['Ch1_ylabel']
-        Ch2_ylabel = format['Ch2_ylabel']
-
-        self.f = plt.figure(figsize=(9, 8), dpi=72)
+        self.fig = plt.figure(figsize=(9, 8), dpi=72)
         gs = gridspec.GridSpec(2, 1, height_ratios=[ratios[0], ratios[1]])
-        self.Ch1 = plt.subplot(gs[0], ylabel=Ch1_ylabel, xlabel=xlabel)
-        self.Ch2 = plt.subplot(gs[1], ylabel=Ch2_ylabel, xlabel=xlabel)
-        self.Ch1.grid(True, color='gray')  # This is the grid of the plot, not the placing comand
-        self.Ch2.grid(True, color='gray')
+        self.Ch1 = self.fig.add_subplot(gs[0], ylabel=plot_format['Ch1_ylabel'], xlabel=plot_format['xlabel'])
+        self.Ch2 = self.fig.add_subplot(gs[1], ylabel=plot_format['Ch2_ylabel'], xlabel=plot_format['xlabel'])
 
-        self.canvas = FigureCanvasTkAgg(self.f, self.plot_frame)
+        self.Ch1.grid(True, color='gray', axis='both')  # This is the grid of the plot, not the placing comand
+        self.Ch2.grid(True, color='gray', axis='both')
+        
+        ## Test if optional plot settings are present in the specific experiment
+        ## (e.g. these are all present in the CV experiment, but not in IV)
+        if 'x_scale' in plot_format:
+            self.Ch1.set_xscale(plot_format['x_scale'])   
+            self.Ch2.set_xscale(plot_format['x_scale'])
+        if 'Ch1_scale' in plot_format:
+            self.Ch1.set_yscale(plot_format['Ch1_scale'])
+        if 'Ch2_scale' in plot_format:
+            self.Ch2.set_yscale(plot_format['Ch2_scale'])
+
+        self.canvas = FigureCanvasTkAgg(self.fig, self.plot_frame)
         self.canvas.get_tk_widget().pack()
         self.canvas.show()
 
@@ -223,8 +231,6 @@ class Mordor(object):
         self.create_menu_bar()
 
         # The top-most containers. These must be packed and not grid in order to use the matplotlib toolbar
-        # self.plot_frame = ttk.Frame(master=self.root, padding=(5, 5, 5, 5))
-        # self.control_frame = ttk.Frame(master=self.root, padding=(5, 15, 0, 15))
         self.plot_frame = ttk.Frame(master=self.window, padding=(5, 5, 5, 5))
         self.control_frame = ttk.Frame(master=self.window, padding=(5, 15, 0, 15))
         self.plot_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=1)
@@ -240,12 +246,15 @@ class Mordor(object):
         self.data_list.bind('<<ListboxSelect>>', self.update_data_selected)
         data_list_scroll = ttk.Scrollbar( master=plot_manage_frame, orient=tk.VERTICAL, command=self.data_list.yview)
         self.data_list.configure(yscrollcommand=data_list_scroll.set)
-        clear_button = ttk.Button(master=plot_manage_frame, text='Clear memory', command=self.clearAxis)
+        clear_button = ttk.Button(master=plot_manage_frame, text='CLEAR ALL', command=self.clearAxis)
+        clear_sel_button = ttk.Button(master=plot_manage_frame, text='Clear Selected', command=self.remove_selected)
 
         plot_manage_frame.grid(column=0, row=99, sticky=(tk.NSEW))
         self.data_list.grid(column=0, row=1, sticky=(tk.NSEW))
         data_list_scroll.grid(column=1, row=1, sticky=(tk.NS))
-        clear_button.grid(column=0, row=2, sticky=(tk.EW, tk.S))
+        clear_sel_button.grid(column=0, row=2, sticky=(tk.EW, tk.S))
+        clear_button.grid(column=0, row=3, sticky=(tk.EW, tk.S))
+
 
     def clearAxis(self):
         """ Delete any previous measurements from the plots and variables. The data is not removed from the temp folder.
@@ -267,6 +276,7 @@ class Mordor(object):
 
         if n > 0:
             self.data_list.delete(0, last=tk.END)
+            
 
     def prepare_meas(self, initial_data):
 
@@ -275,20 +285,11 @@ class Mordor(object):
         for i in range(n):
             plt.setp(self.Ch1.lines[i], color='k')
             plt.setp(self.Ch2.lines[i], color='k')
+        
+        self.Ch1.plot(initial_data[:, 0], initial_data[:, 1]+1, 'r')
+        self.Ch2.plot(initial_data[:, 0], initial_data[:, 2]+1, 'r')
+        # We are reading both channels simultaneously            
 
-        # We are reading both channels simultaneously
-        if self.experiment.plot_format['Ch1_scale'] is 'log':
-            self.Ch1.semilogy(initial_data[:, 0], initial_data[:, 1]+1, 'r')
-        else:
-            self.Ch1.plot(initial_data[:, 0], initial_data[:, 1], 'r')
-
-        if self.experiment.plot_format['Ch2_scale'] is 'log':
-            self.Ch2.semilogy(initial_data[:, 0], initial_data[:, 2]+1, 'r')
-        else:
-            self.Ch2.plot(initial_data[:, 0], initial_data[:, 2], 'r')
-
-        self.Ch1.set_xbound(lower=initial_data[0, 0], upper=initial_data[-1, 0])
-        self.Ch2.set_xbound(lower=initial_data[0, 0], upper=initial_data[-1, 0])
 
     def finish_meas(self, data, finish):
         """ Finish the measurement, updating some global variables, saving the data in the temp file and offering
@@ -312,6 +313,16 @@ class Mordor(object):
         pu.update(self.Ch1, data[:, 1], data[:, 0])
         pu.update(self.Ch2, data[:, 2], data[:, 0])
 
+        self.canvas.draw()
+        
+    def update_plot_axis(self, plot_format): ## When Y labels are changed
+        pu.update_labels(self.Ch1, plot_format['xlabel'], plot_format['Ch1_ylabel'])
+        pu.update_labels(self.Ch2, plot_format['xlabel'], plot_format['Ch2_ylabel'])
+        pu.update_yscales(self.Ch1, plot_format['Ch1_scale'])
+        pu.update_yscales(self.Ch2, plot_format['Ch2_scale'])
+        pu.update_xscales(self.Ch1, plot_format['x_scale'])
+        pu.update_xscales(self.Ch2, plot_format['x_scale'])
+        
         self.canvas.draw()
 
     def clear_plot(self, xtitle='X axis', ticks='on'):
@@ -357,11 +368,24 @@ class Mordor(object):
             plt.setp(self.Ch1.lines[i], color='k')
             plt.setp(self.Ch2.lines[i], color='k')
 
-        plt.setp(self.Ch1.lines[j], color='r')
-        plt.setp(self.Ch2.lines[j], color='r')
+        plt.setp(self.Ch1.lines[j], color='r', zorder=1000)
+        plt.setp(self.Ch2.lines[j], color='r', zorder=1000)
 
         self.canvas.draw()
 
+    def remove_selected(self, *args):
+        j = int(self.data_list.curselection()[0])        
+        if j != None:
+            # Removes selected plot
+            self.Ch1.lines.remove(self.Ch1.lines[j])
+            self.Ch2.lines.remove(self.Ch2.lines[j])
+            self.canvas.draw()
+
+            del self.all_data[j]
+            del self.all_data_names[j]
+            self.selected_meas = None
+            self.data_list.delete(j)
+            
 class Save(object):
     """ Class for saving data in a formatted way
     """
@@ -516,6 +540,7 @@ class Splash:
         ttk.Button(control_frame, text='IV', command=self.iv, style="Splash.TButton").grid(column=1, row=1, sticky=tk.NSEW)
         ttk.Button(control_frame, text='Temperature', command=self.temperature, style="Splash.TButton").grid(column=1, row=2, sticky=tk.NSEW)
         ttk.Button(control_frame, text='Flash', command=self.flash, style="Splash.TButton").grid(column=1, row=3, sticky=tk.NSEW)
+        ttk.Button(control_frame, text='CV', command=self.cv, style="Splash.TButton").grid(column=1, row=4, sticky=tk.NSEW)
 
         # Small buttons frame
         smallbuttons = ttk.Frame(control_frame)
@@ -633,6 +658,15 @@ class Splash:
         """
         self.hide()
         self.runing.append(Flash(self, self.devman, self.experiments, Save))
+        self.experiments = self.experiments + 1
+        
+    def cv(self):
+        """ Creates an instance of Mordor to run CV experiments
+
+        :return: None
+        """
+        self.hide()
+        self.runing.append(Mordor(self, CV, self.devman, self.experiments))
         self.experiments = self.experiments + 1
 
 if __name__ == '__main__':
