@@ -7,7 +7,7 @@ import visa
 
 class KeysightE4990A:
     """
-    Keysight E4990A impedance analyser
+    Keysight E4990A impedance analyser class
     """
     def __init__(self, address='USB0::0x0957::0x1809::MY54101596::0::INSTR', name='Keysight E4990A', info=None):
         """ Constructor of the device class. Add here whatever initialisation routing needed by the SMU.
@@ -71,18 +71,14 @@ class KeysightE4990A:
         self.rm.close()
 
     def setup_measurement(self, plot_format, options):
-        """ Prepares and triggers the IV measurement.
+        """ Prepares the measurement by setting up the scan parameters.
 
-        :param function: 'dc' or 'sweep', dc or sweep operating function
-        :param source: 'v' or 'i' for voltage or current biasing, respectively
-        :param compliance: meas compliance
-        :param measRange: the meas range as the index of self.i_range or self.v_range
-        :param delay: the delay between applying a bias and taking the meas
-        :param intTime: integration time as the index from the self.int_time list
-        :return: The measured data
+        :param plot_format: dictionary of setup parameters for plotting the data
+        :param options: dictionary of setup parameters for the scan
+        :return: None
         """
         ## Clear buffer
-        #self.device.write('*CLS')
+        self.device.write('*CLS')
 
         ## Set DC bias mode to Voltage
         self.device.write(':SOURce1:BIAS:MODE %s' % ('VOLTage'))
@@ -140,9 +136,11 @@ class KeysightE4990A:
             self.device.write(':CALCulate1:PARameter4:DEFine %s' % ('IDC')) ## Trace 4 = IDC
 
     def measure(self, options):
-        """ Triggers the measurement.
-
+        """ Starts and stops the measurement.
+	
+	:return: None
         """
+	
         if options['fixed_value'] != 0:
             self.device.write(':SOURce:BIAS:STATe %s' % ('ON'))
         self.device.write(':TRIGger:SEQuence:SOURce %s' % ('BUS'))
@@ -153,12 +151,11 @@ class KeysightE4990A:
         self.device.write(':SOURce:BIAS:STATe %s' % ('OFF'))
 
     def return_data(self):
-        """ We get the data fromt he SMU. Depending on the order provided by the SMU we need to invert the output to
-        have voltage-current, regardless of who is the bias or the meas. We convert the data to an array and re-shape
-        it in two columns.
+        """ Retrieves the data from the instrument
 
-        :return: the measured data, a tuple with two vectors: voltage and current
+        :return: the measured data, a tuple with three vectors, which depend on the type of measurement performed
         """
+	
         ## Autoscale all traces
         self.device.write(':DISPlay:WINDow1:TRACe1:Y:SCALe:AUTO')
         self.device.write(':DISPlay:WINDow1:TRACe2:Y:SCALe:AUTO')
@@ -175,25 +172,21 @@ class KeysightE4990A:
         data = np.column_stack((x_data, Ch1_data, Ch2_data)) ## Aggregate data
         return data[:, 0], data[:, 1], data[:, 2]
 
-    def operate_off(self):
-        """ Turn off the output of the SMU
-
-        :return: None
-        """
-        pass
-
-    def operate_on(self):
-        """ Turn on the output of the SMU
-
-        :return: None
-        """
-        pass
 
     def interface(self, master):
-        messagebox.showinfo(message='No specific configuration available for {0}'.format(self.info['Name']),
+        """ Givces error if Mordor cannot locate a configuration file for the instrument.
+	
+	:return: Error - no configuration available.
+	"""
+	messagebox.showinfo(message='No specific configuration available for {0}'.format(self.info['Name']),
                             detail='Press OK to continue.', title='Device configuration')
         
     def abort_sweep(self):
+	""" Aborts scan.
+	
+	:return: None
+	"""
+	
         self.device.write(':ABORt')
         self.device.write(':SOURce:BIAS:STATe %s' % ('OFF'))
 
@@ -201,14 +194,3 @@ class New(KeysightE4990A):
     """ Standarised name for the KeysightE4990A class"""
     pass
 
-
-#if __name__ == '__main__':
-#    za = New()
-#    za.gen_setup()
-#    za.setup_measurement()
-#    za.measure()
-#    temp_values = za.device.query_ascii_values('*OPC?')
-#    opc = int(temp_values[0])
-#    data = za.get_data()
-#    za.close()
-#    za.rm.close()
