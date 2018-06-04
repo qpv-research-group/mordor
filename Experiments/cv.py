@@ -8,7 +8,7 @@ from Experiments.batch_control import Batch
 from tkinter import messagebox
 
 class CV:
-    """ Base class for impedance sweep experiments """
+    """ Base class for impedance analysis experiments """
 
     def __init__(self, master, devman, in_batch=False):
         self.master = master
@@ -94,7 +94,9 @@ class CV:
             self.batch = Batch(self.master, self.dm, fileheader=self.header, mode=batch_mode)
 
     def create_interface(self):
-
+	""" Create GUI for the CV experiment
+	:return: None
+        """
         # Add elements to the menu bar
         self.create_menu_bar()
 
@@ -219,6 +221,9 @@ class CV:
             self.run_button.grid(column=1, row=98, sticky=( tk.E, tk.SW, tk.S))
 
     def update_header(self):
+	""" Updates header in output text file
+	:return: None
+        """
         top0 = self.fixed_var.get()
         top1 = self.fixed_value_var.get()
         
@@ -277,7 +282,10 @@ class CV:
             self.master.menu_hardware.entryconfig("ZA", state="disabled")
 			
     def refresh_buttons(self):
-        if self.fixed_var.get() == 'freq':
+        """ Updates button features when different experimental setups are selected
+	:return: None
+        """
+	if self.fixed_var.get() == 'freq':
             self.x_scale_var.set('linear')
             self.scan_scale() ## Updates plot_format, which is used to pass parameters to the device
             self.xlog_button.configure(state='disabled')
@@ -294,7 +302,7 @@ class CV:
             self.Ch2log_button.configure(state='normal')	
 
     def mode(self):
-        """ When the bias mode is changed, this function updates some internal variables and the graphical interface
+        """ When the experimental setup is changed, this function updates some internal variables and the graphical interface
 
         :return: None
         """
@@ -405,9 +413,8 @@ class CV:
 
     def prepare_scan(self):
         """ Any scan is divided in three stages:
-        1) Prepare the conditions of the scan (this function), getting starting point, integration time and creating all relevant variables.
-        2) Running the scan, performed by a recursive function "get_next_datapoint"
-        3) Finish the scan, where we update some variables and save the data.
+        1) Prepare the conditions of the scan (this function), creating all relevant variables.
+        2) Calls the 'start_scan' function to begin the measurement
 
         :return: None
         """
@@ -436,13 +443,21 @@ class CV:
         self.start_scan()
 
     def start_scan(self):
-        self.za.setup_measurement(self.plot_format, self.options)
+        """ Begins the experiment
+	:return: None
+	"""
+	
+	self.za.setup_measurement(self.plot_format, self.options)
         self.za.measure(self.options)
         self.get_data()
         
 
     def get_data(self):
-
+	""" Retireves the data collected during the scan
+	
+	:return: None
+	"""
+	
         data0, data1, data2 = self.za.return_data()
 
         self.record = np.zeros((len(data0), 3))
@@ -478,6 +493,15 @@ class CV:
             self.prepare_scan()
 			
     def check_inputs(self, parameter, value, min, max):
+	""" Check the values of relevant scan parameters and gives an error if they are out of range
+	
+	:param parameter: the name of the parameter to check
+	:param: value: the value stored in the parameter variable
+	:param: min: the minimum value allowed for the parameter
+	:param: max: the maximum value allowed for the parameter
+	:return: Error: parameter out of range
+	"""
+	
         if value < min or value > max:
             messagebox.showerror("Error", parameter+" is out of range!")
             self.run_button['state'] = 'enabled'
@@ -488,6 +512,11 @@ class CV:
 
         
     def run_check(self):
+	""" Calls the 'check_inputs' function on all of relevant scan parameters
+	
+	:return: Error - parameter out of range
+	"""
+	
         self.mode = self.fixed_var.get()
         self.fixed_value = float(self.fixed_value_var.get())
         self.sweep_start = float(self.sweep_start_var.get())
@@ -514,6 +543,9 @@ class CV:
 
         
     def abort(self):
-        #pass
+	""" Aborts scan
+	
+	:return: None
+	"""
         self.za.abort_sweep()
         self.get_data()
