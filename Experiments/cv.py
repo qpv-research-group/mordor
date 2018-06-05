@@ -83,7 +83,6 @@ class CV:
     def new_batch(self, batch_mode):
         """ Shows current batch window or, if a different batch is chosen, destroys the old one and creates a new one
         for the new batch mode
-
         :param batch_mode: the selected type of batch
         :return: None
         """
@@ -94,8 +93,8 @@ class CV:
             self.batch = Batch(self.master, self.dm, fileheader=self.header, mode=batch_mode)
 
     def create_interface(self):
-	""" Create GUI for the CV experiment
-	:return: None
+        """ Create GUI for the CV experiment
+        :return: None
         """
         # Add elements to the menu bar
         self.create_menu_bar()
@@ -221,8 +220,8 @@ class CV:
             self.run_button.grid(column=1, row=98, sticky=( tk.E, tk.SW, tk.S))
 
     def update_header(self):
-	""" Updates header in output text file
-	:return: None
+        """ Updates header in output text file
+        :return: None
         """
         top0 = self.fixed_var.get()
         top1 = self.fixed_value_var.get()
@@ -240,7 +239,6 @@ class CV:
         
     def fill_devices(self):
         """ Fills the device selectors with the corresponding type of devices
-
         :return: None
         """
         self.za_box['values'] = self.dm.get_devices(['ZA'])
@@ -251,7 +249,6 @@ class CV:
     def select_za(self, *args):
         """ When the Z analyser selector changes, this function updates some variables and the graphical interface
         to adapt it to the selected device.
-
         :param args: Dummy variable that does nothing but must exist (?)
         :return: None
         """
@@ -285,7 +282,7 @@ class CV:
         """ Updates button features when different experimental setups are selected
 	:return: None
         """
-	if self.fixed_var.get() == 'freq':
+        if self.fixed_var.get() == 'freq':
             self.x_scale_var.set('linear')
             self.scan_scale() ## Updates plot_format, which is used to pass parameters to the device
             self.xlog_button.configure(state='disabled')
@@ -303,7 +300,6 @@ class CV:
 
     def mode(self):
         """ When the experimental setup is changed, this function updates some internal variables and the graphical interface
-
         :return: None
         """
 
@@ -334,7 +330,6 @@ class CV:
             
     def channel_param(self):
         """ When the channel parameters are changed, this function updates some internal variables and the graphical interface
-
         :return: None
         """
         ## Channel 1 labels ----------------------------------
@@ -363,7 +358,6 @@ class CV:
 
     def scan_scale(self):
         """ When the scan scales are changed, this function updates some internal variables and the graphical interface
-
         :return: None
         """
          ## X-axis scale ----------------------------------
@@ -387,7 +381,6 @@ class CV:
 
     def start_stop_scan(self):
         """ Starts and stops a scan
-
         :return: None
         """
         self.run_check()        
@@ -415,7 +408,6 @@ class CV:
         """ Any scan is divided in three stages:
         1) Prepare the conditions of the scan (this function), creating all relevant variables.
         2) Calls the 'start_scan' function to begin the measurement
-
         :return: None
         """
         ## If inputs are OK, fill up the options dictionary and proceed.
@@ -444,19 +436,18 @@ class CV:
 
     def start_scan(self):
         """ Begins the experiment
-	:return: None
-	"""
+		:return: None
+        """
 	
-	self.za.setup_measurement(self.plot_format, self.options)
+        self.za.setup_measurement(self.plot_format, self.options)
         self.za.measure(self.options)
         self.get_data()
         
 
     def get_data(self):
-	""" Retireves the data collected during the scan
-	
-	:return: None
-	"""
+        """ Retireves the data collected during the scan
+        :return: None
+        """
 	
         data0, data1, data2 = self.za.return_data()
 
@@ -471,7 +462,6 @@ class CV:
     def finish_scan(self):
         """ Finish the scan, updating some global variables, saving the data in the temp file and offering to save the
         data somewhere else.
-
         :return: None
         """
 
@@ -493,14 +483,14 @@ class CV:
             self.prepare_scan()
 			
     def check_inputs(self, parameter, value, min, max):
-	""" Check the values of relevant scan parameters and gives an error if they are out of range
+        """ Check the values of relevant scan parameters and gives an error if they are out of range
 	
-	:param parameter: the name of the parameter to check
-	:param: value: the value stored in the parameter variable
-	:param: min: the minimum value allowed for the parameter
-	:param: max: the maximum value allowed for the parameter
-	:return: Error: parameter out of range
-	"""
+        :param parameter: the name of the parameter to check
+        :param: value: the value stored in the parameter variable
+        :param: min: the minimum value allowed for the parameter
+        :param: max: the maximum value allowed for the parameter
+        :return: Error: parameter out of range
+        """
 	
         if value < min or value > max:
             messagebox.showerror("Error", parameter+" is out of range!")
@@ -512,10 +502,10 @@ class CV:
 
         
     def run_check(self):
-	""" Calls the 'check_inputs' function on all of relevant scan parameters
+        """ Calls the 'check_inputs' function on all of relevant scan parameters
 	
-	:return: Error - parameter out of range
-	"""
+        :return: Error - parameter out of range
+        """
 	
         self.mode = self.fixed_var.get()
         self.fixed_value = float(self.fixed_value_var.get())
@@ -543,9 +533,9 @@ class CV:
 
         
     def abort(self):
-	""" Aborts scan
+        """ Aborts scan
 	
-	:return: None
-	"""
+        :return: None
+        """
         self.za.abort_sweep()
         self.get_data()
