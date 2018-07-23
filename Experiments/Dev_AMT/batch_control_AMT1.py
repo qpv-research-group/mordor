@@ -1,4 +1,4 @@
-__author__ = 'D. Alonso-Álvarez'
+__author__ = 'A. M. Telford & D. Alonso-Álvarez'
 
 import os
 import numpy as np
@@ -13,7 +13,7 @@ from Devices import device_manager
 class Batch(object):
     """ Base class for the batch mode in spectroscopy experiments """
 
-    def __init__(self, root, devman, fileheader='', mode='Dummy'):
+    def __init__(self, root, devman, fileheader='', mode='Dummy', device=None):
         """ Constructor of the Batch class
 
         :param root: The main window of the program
@@ -28,7 +28,6 @@ class Batch(object):
         self.batch_length = 0
         self.path = os.path.expanduser('~')
         self.data_file = None
-
         self.interface()
 
         if mode == 'IV':
@@ -40,12 +39,9 @@ class Batch(object):
             self.mode = mode
 
         elif mode == 'Temperature':
-            from Experiments.temperature_batch import Temperature_batch
-            self.batch_data = Temperature_batch(self, fileheader=fileheader)
-            self._batch_ready = self.batch_data.batch_ready
-            self._batch_proceed = self.batch_data.batch_proceed
-            self._batch_wrapup = self.batch_data.batch_wrapup
-            self.mode = mode
+            self.window.withdraw()
+            messagebox.showinfo(message='{0} batch mode not implemented, yet.'.format(mode))
+            self.mode = 'Dummy'
 
         elif mode == 'Time':
             from Experiments.time_batch import Time_batch
@@ -54,10 +50,10 @@ class Batch(object):
             self._batch_proceed = self.batch_data.batch_proceed
             self._batch_wrapup = self.batch_data.batch_wrapup
             self.mode = mode
-
-        elif mode == 'DLCP':
-            from Experiments.DLCP_batch import DLCP_batch
-            self.batch_data = DLCP_batch(self, fileheader=fileheader)
+        
+        elif mode == 'CV_batch':
+            from Experiments.cv_batch import CV_batch
+            self.batch_data = CV_batch(self, self.dm, fileheader=fileheader)
             self._batch_ready = self.batch_data.batch_ready
             self._batch_proceed = self.batch_data.batch_proceed
             self._batch_wrapup = self.batch_data.batch_wrapup
@@ -178,7 +174,7 @@ class Batch(object):
         batch_list_scroll.grid(column=1, row=0, sticky=(tk.NS))
 
     def disable(self):
-        """ Disables the batch mode.
+        """ Dissables the batch mode.
 
         :return: None
         """
@@ -186,7 +182,7 @@ class Batch(object):
         messagebox.showinfo(message='Batch mode disabled')
 
     def populate_batch_list(self, new_list):
-        """ Fills the batch list with the steps that will be done
+        """ Fills the batch list with the bias steps that will be done
 
         :param new_list: The list of steps to be done
         :return: None
@@ -277,9 +273,11 @@ class Batch(object):
         """
         self._batch_wrapup(data)
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
 
-#    root = tk.Tk()
-#    dm = device_manager.Devman(root)
-#    b = Batch(root, dm)
-#    root.mainloop()
+    root = tk.Tk()
+    dm = device_manager.Devman(root)
+    b = Batch(root, dm)
+    root.mainloop()
+
+

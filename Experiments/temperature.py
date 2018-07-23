@@ -159,7 +159,6 @@ class Temperature(object):
 
     def fill_devices(self):
         """ Fills the device selectors with the corresponding type of devices
-
         :return:
         """
 
@@ -197,7 +196,6 @@ class Temperature(object):
 
     def open_new_experiment(self):
         """ Opens the splash screen to run a new experiment, in paralel to the current one
-
         :return: None
         """
 
@@ -205,7 +203,6 @@ class Temperature(object):
 
     def open_documentation(self):
         """ Opens the documentation in the web browser
-
         :return: None
         """
         import webbrowser
@@ -344,4 +341,3 @@ class Temperature(object):
         toolbar = NavigationToolbar2TkAgg(self.canvas, frame)
         toolbar.update()
         self.canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-
