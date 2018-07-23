@@ -1,5 +1,5 @@
 ﻿__author__ = 'Diego Alonso-Álvarez'
-__version__= '2.0_beta_4'
+__version__= '2.0_beta_5'
 __email__ = 'd.alonso-alvarez@imperial.ac.uk'
 __contributors__ = ['Markus Furher', 'Ture Hinrichsen', 'Jose Videira', 'Tomos Thomas', 'Thomas Wilson', 'Andrew M. Telford']
 
@@ -21,11 +21,11 @@ from tkinter import font
 
 import plot_utils as pu
 import tools
-from Experiments import Spectroscopy, IV, Temperature, Flash, CV
+from Experiments import Spectroscopy, IV, Temperature, Flash, CV, Photoreflectance
 from Devices import device_manager
 
 class Mordor(object):
-    """ This class is the core of Mordor. It controls the ploting and saving of the data in the different experiments
+    """ This class is the core of Mordor. It controls the plotting and saving of the data in the different experiments
     as well as ensuring that there is a safe *close* and *opening* of the program
     """
 
@@ -168,13 +168,13 @@ class Mordor(object):
 
         :return: None
         """
-        if self.experiment.id == 'CV':
+        if self.experiment.id == 'CV' or self.experiment.id == 'PR':
             self.experiment.update_header() ## This updates the file's header
-            
+
         self.save.show((self.selected_meas,), (self.experiment.header,), (self.experiment.extension,))
 
     def open_new_experiment(self):
-        """ Opens the splash screen to run a new experiment, in paralel to the current one
+        """ Opens the splash screen to run a new experiment, in parallel to the current one
 
         :return: None
         """
@@ -202,11 +202,11 @@ class Mordor(object):
 
         self.Ch1.grid(True, color='gray', axis='both')  # This is the grid of the plot, not the placing comand
         self.Ch2.grid(True, color='gray', axis='both')
-        
+
         ## Test if optional plot settings are present in the specific experiment
         ## (e.g. these are all present in the CV experiment, but not in IV)
         if 'x_scale' in plot_format:
-            self.Ch1.set_xscale(plot_format['x_scale'])   
+            self.Ch1.set_xscale(plot_format['x_scale'])
             self.Ch2.set_xscale(plot_format['x_scale'])
         if 'Ch1_scale' in plot_format:
             self.Ch1.set_yscale(plot_format['Ch1_scale'])
@@ -276,7 +276,7 @@ class Mordor(object):
 
         if n > 0:
             self.data_list.delete(0, last=tk.END)
-            
+
 
     def prepare_meas(self, initial_data):
 
@@ -285,10 +285,10 @@ class Mordor(object):
         for i in range(n):
             plt.setp(self.Ch1.lines[i], color='k')
             plt.setp(self.Ch2.lines[i], color='k')
-        
+
         self.Ch1.plot(initial_data[:, 0], initial_data[:, 1]+1, 'r')
         self.Ch2.plot(initial_data[:, 0], initial_data[:, 2]+1, 'r')
-        # We are reading both channels simultaneously            
+        # We are reading both channels simultaneously
 
 
     def finish_meas(self, data, finish):
@@ -314,7 +314,7 @@ class Mordor(object):
         pu.update(self.Ch2, data[:, 2], data[:, 0])
 
         self.canvas.draw()
-        
+
     def update_plot_axis(self, plot_format): ## When Y labels are changed
         pu.update_labels(self.Ch1, plot_format['xlabel'], plot_format['Ch1_ylabel'])
         pu.update_labels(self.Ch2, plot_format['xlabel'], plot_format['Ch2_ylabel'])
@@ -322,7 +322,7 @@ class Mordor(object):
         pu.update_yscales(self.Ch2, plot_format['Ch2_scale'])
         pu.update_xscales(self.Ch1, plot_format['x_scale'])
         pu.update_xscales(self.Ch2, plot_format['x_scale'])
-        
+
         self.canvas.draw()
 
     def clear_plot(self, xtitle='X axis', ticks='on'):
@@ -374,7 +374,7 @@ class Mordor(object):
         self.canvas.draw()
 
     def remove_selected(self, *args):
-        j = int(self.data_list.curselection()[0])        
+        j = int(self.data_list.curselection()[0])
         if j != None:
             # Removes selected plot
             self.Ch1.lines.remove(self.Ch1.lines[j])
@@ -385,7 +385,7 @@ class Mordor(object):
             del self.all_data_names[j]
             self.selected_meas = None
             self.data_list.delete(j)
-            
+
 class Save(object):
     """ Class for saving data in a formatted way
     """
@@ -541,6 +541,7 @@ class Splash:
         ttk.Button(control_frame, text='Temperature', command=self.temperature, style="Splash.TButton").grid(column=1, row=2, sticky=tk.NSEW)
         ttk.Button(control_frame, text='Flash', command=self.flash, style="Splash.TButton").grid(column=1, row=3, sticky=tk.NSEW)
         ttk.Button(control_frame, text='CV', command=self.cv, style="Splash.TButton").grid(column=1, row=4, sticky=tk.NSEW)
+        ttk.Button(control_frame, text='Photoreflectance', command=self.photoreflectance, style="Splash.TButton").grid(column=1, row=5, sticky=tk.NSEW)
 
         # Small buttons frame
         smallbuttons = ttk.Frame(control_frame)
@@ -659,7 +660,7 @@ class Splash:
         self.hide()
         self.runing.append(Flash(self, self.devman, self.experiments, Save))
         self.experiments = self.experiments + 1
-        
+
     def cv(self):
         """ Creates an instance of Mordor to run CV experiments
 
@@ -667,6 +668,15 @@ class Splash:
         """
         self.hide()
         self.runing.append(Mordor(self, CV, self.devman, self.experiments))
+        self.experiments = self.experiments + 1
+
+    def photoreflectance(self):
+        """ Creates an instance of Mordor to run photoreflectance experiments
+
+        :return: None
+        """
+        self.hide()
+        self.runing.append(Mordor(self, Photoreflectance, self.devman, self.experiments))
         self.experiments = self.experiments + 1
 
 if __name__ == '__main__':
