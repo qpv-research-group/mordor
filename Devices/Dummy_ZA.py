@@ -23,6 +23,16 @@ class DummyZA:
         if info is not None:
             self.info.update(info)
 
+        # Opening the device is essential. Here is an example for a VISA-based instrument
+        # rm = visa.ResourceManager()
+        # self.device = rm.open_resource("{}".format(address))
+        ##self.device = None
+
+        ##self.i_range = ['auto', '1e-9 A', '10e-9 A', '100e-9 A', '1e-6 A', '10e-6 A', '100e-6 A', '1e-3 A', '10e-3 A',
+        ##                '100e-3 A']
+        ##self.v_range = ['auto', '1.1 V', '11 V']
+        ##self.log_points = ['5', '10', '25', '50']
+        ##self.int_time = ['0.416', '4', '16.67', '20']
 
     def query(self, msg):
         """ Send a message to the instrument and then waits for an answer. depending on the nature of the device and
@@ -56,30 +66,136 @@ class DummyZA:
         pass
 
 
-    def set_za_function(self, fixed):
+    def set_za_function(self, function, fixed):
         """ Sets the functionality of the source, what to bias and how to do it.
 
-        :param fixed: variable indicating whethe rbias or frequency are fixed
+        :param function: 'dc' or 'sweep', dc or sweep operating function
+        :param source: 'v' or 'i', voltage or current source
         :return: None
         """
 
         self.fixed = fixed
+        #self.function = function
+
+
+    def update_compliance(self, compliance, measRange):
+        """ Updates the compliance and the measurement range.
+
+        :param compliance: current or voltage compliance, oposite to the selected source
+        :param measRange: the meas range as the index of self.i_range or self.v_range
+        :return: None
+        """
+
+        self.compliance = compliance
+        self.measRange = measRange
+
+
+    def update_integration_time(self, new_time):
+        """ Sets the integration time.
+
+        :param new_time: new integration time as the index from the self.int_time list
+        :return: None
+        """
+
+        self.itime = new_time
+
+
+    def update_waiting_time(self, new_time):
+        """ Sets the delay time between setting a bias and starting a measurement
+
+        :param new_time: New delay time in ms.
+        :return: None
+        """
+        self.delay = new_time
 
 
     def setup_measurement(self, plot_format, options):
-        """ Sets up the scan.
+        """ Prepares and triggers the IV measurement.
+
+        :param function: 'dc' or 'sweep', dc or sweep operating function
+        :param source: 'v' or 'i' for voltage or current biasing, respectively
+        :param compliance: meas compliance
+        :param measRange: the meas range as the index of self.i_range or self.v_range
+        :param delay: the delay between applying a bias and taking the meas
+        :param intTime: integration time as the index from the self.int_time list
+        :return: The measured data
         """
 
+        ##self.set_source_function(function, fixed)
+        ##self.update_compliance(compliance, measRange)
+        ##self.update_integration_time(intTime)
+        ##self.update_waiting_time(delay)
+        
+        ## Setup fixed variable, its value, and the sweep parameters.
+
+
     def measure(self, options):
-        """ Starts the scan.
+        """ Prepares and triggers the IV measurement.
+
+        :param source: 'v' or 'i' for voltage or current biasing, respectively
+        :param start: start bias
+        :param stop: stop bias
+        :param points: points to measure per decade in current bias mode
+        :param step: step size in voltage bias mode
+        :param compliance: meas compliance
+        :param measRange: the meas range as the index of self.i_range or self.v_range
+        :param delay: the delay between applying a bias and taking the meas
+        :param intTime: integration time as the index from the self.int_time list
+        :return: The estimated measuring time
         """
+
+        # First we setup the experiment
+
+        # We program the sweep.
+        # We typically will use the AUTO fixed range for the bias, as it might cover may orders of magnitude
+
+
+        # We estimate the runing time of the sweep, set the timeout time accordingly and return the control to the IV module.
+        # This will wait in a "safe way" during the measurement, avoiding freezing the program
+        #self.totalPoints = nop
+        #minimumWait = 1 ## in ms
+        #measTime = self.totalPoints * minimumWait
+        ##if self.measRange == 0:
+        ##    measTime = measTime * 10
+        # self.device.timeout = None
+        #print("Waiting for Dummy.\nEstimated measurement time = {} s".format(measTime / 1000))
+
+
+        # Finally, we trigger the sweep. Depending on the SMU, you might need to turn it on first
+
+
+        #return measTime
+
+
+    ##def set_bias(self, biasValue=0.0):
+        """ Set a bias to the source. If the source is not turned on or the function is not set to 'dc',
+        the bias will not be applied
+
+        :param biasValue: the chosen bias
+        :return: None
+        """
+
+        # First we check that the experiment has been setup for DC bias/meas
+        ##if self.function != 'dc':
+        ##   print('DC measurement not setup correctly. Call self.setup_experiment before setting the bias')
+        ##    return
+
+        # Set the bias in the SMU
+
+        # And triger it, if need it
 
 
     def return_data(self):
-        """ Generate random data for testing.
+        """ We get the data fromt he SMU. Depending on the order provided by the SMU we need to invert the output to
+        have voltage-current, regardless of who is the bias or the meas. We convert the data to an array and re-shape
+        it in two columns.
 
-        :return: the generated data, a tuple with two vectors: voltage and current
+        :return: the measured data, a tuple with two vectors: voltage and current
         """
+
+        # If we are in sweep function, we have to really wait until the meas is finished. In some SMU this is not needed
+        # as they will not response until they are finished. In others, they don't like to be bothered while measuring.
+        # Then, we have to turn off the source if not done automatically. In the dc function, the source is turn off externally
 
         totalPoints = 100
         # Get the data.
@@ -87,8 +203,13 @@ class DummyZA:
         data = np.random.rand(3*totalPoints)
         data = np.array(data, dtype=np.float32).reshape((-1, 3))
 
-        return data[:, 0], data[:, 1], data[:, 2]
 
+        # Depending of what we are biasing, we might need to invert the order of the output
+        # We assume in the example that the source produces bias-meas and we want voltage-current, so we invert it
+        ##if self.source == 0:
+        return data[:, 0], data[:, 1], data[:, 2]
+        ##else:
+        ## return data[:, 1], data[:, 0]
 
     def operate_off(self):
         """ Turn off the output of the SMU

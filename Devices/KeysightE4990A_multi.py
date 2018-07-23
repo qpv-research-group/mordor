@@ -24,7 +24,7 @@ class KeysightE4990A:
         if info is not None:
             self.info.update(info)
 
-        # Opening the device is essential.
+        # Opening the device is essential. Here is an example for a VISA-based instrument
         self.rm = visa.ResourceManager()
         self.device = self.rm.open_resource("{}".format(address))
         self.device.timeout = 180000 ## 180 s default timeout (e.g. for OPC?)
@@ -37,9 +37,6 @@ class KeysightE4990A:
                             'Rp (Ohm)' : 'RP',
                             '|Z| (Ohm)' : 'Z',
                             'Tz (deg)' : 'TZ',
-			    'Zreal (Ohm)' : 'R',
-			    'Zimag (Ohm)' : 'X',
-                            'Idc (A)' : 'IDC',
                             'log' : 'LOGarithmic',
                             'linear' : 'LINear',
                             'up': 'UP',
@@ -68,7 +65,14 @@ class KeysightE4990A:
         :return: None
         """
         self.device.close()
-        self.rm.close()
+
+
+    def gen_setup(self):
+        """ Sets the functionality of the impedance analyser.
+       
+        """
+        self.device.write(':SOURce1:BIAS:MODE %s' % ('VOLTage'))
+        self.device.write(':SOURce1:BIAS:RANGe %s' % ('M1'))
 
     def setup_measurement(self, plot_format, options):
         """ Prepares and triggers the IV measurement.
@@ -81,29 +85,13 @@ class KeysightE4990A:
         :param intTime: integration time as the index from the self.int_time list
         :return: The measured data
         """
-        ## Clear buffer
-        #self.device.write('*CLS')
-
-        ## Set DC bias mode to Voltage
-        self.device.write(':SOURce1:BIAS:MODE %s' % ('VOLTage'))
-        ## Set DC current range to 1 mA
-        self.device.write(':SOURce1:BIAS:RANGe %s' % ('M1')) ## 1mA
-        ## DC bias constant mode ON
-        self.device.write(':SOURce1:BIAS:ALC:STATe %d' % (1))
-        ## DC bias monitor ON
-        self.device.write(':SENSe1:DC:MEASure:ENABle %d' % (1))
-        ## AC bias constant mode ON
-        self.device.write(':SOURce1:ALC:STATe %d' % (1))
-        self.device.write(':SOURce1:ALC:COUNt %d' % (10)) ## Number of iterations = 10
-        self.device.write(':SOURce1:ALC:TOLerance %G' % (10.0)) ## target = 10%
-        ## Set number of traces to 4
-        self.device.write(':CALCulate1:PARameter1:COUNt %d' % (4))
+        
         ## Turn on point averaging
         self.device.write(':SENSe1:AVERage:STATe %d' % (1))
         ## Set number of point averages
         self.device.write(':SENSe1:AVERage:COUNt %d' % (options['navg']))
         ## Set AC bias amplitude (OSC)
-        self.device.write(':SOURce1:VOLTage:LEVel:IMMediate:AMPLitude %G' % (options['osc_amp']))
+        self.device.write(':SOURce1:VOLTage:LEVel:IMMediate:AMPLitude %d' % (options['osc_amp']))
         ## Set sweep direction
         self.device.write(':SENSe1:SWEep:DIRection %s' % (self.translation[options['sweep_dir']]))
         ## Set sweep points
@@ -119,14 +107,11 @@ class KeysightE4990A:
         
         
         if options['fixed'] == 'bias':
-            self.device.write('SOURce1:BIAS:VOLTage:LEVel:IMMediate:AMPLitude %G' % (options['fixed_value']))
+            self.device.write('SOURce1:BIAS:VOLTage:LEVel:IMMediate:AMPLitude %d' % (options['fixed_value']))
             self.device.write(':SENSe1:FREQuency:STARt %G' % (options['start']))
             self.device.write(':SENSe1:FREQuency:STOP %G' % (options['stop']))
             self.device.write(':SENSe1:SWEep:TYPE %s' % (self.translation[plot_format['x_scale']]))
-            self.device.write(':CALCulate1:PARameter3:DEFine %s' % ('VAC')) ## Trace 3 = VAC
-            self.device.write(':CALCulate1:PARameter4:DEFine %s' % ('IAC')) ## Trace 4 = IAC
         else:
-            self.device.write(':SENSe1:FREQuency:CW %G' % (options['fixed_value']))
             self.device.write(':SOURce1:BIAS:VOLTage:STARt %G' % (options['start']))
             self.device.write(':SOURce1:BIAS:VOLTage:STOP %G' % (options['stop']))
             if plot_format['x_scale'] == 'linear':
@@ -134,10 +119,7 @@ class KeysightE4990A:
             ## translation dictionary cannot be used here
                 self.device.write(':SENSe1:SWEep:TYPE %s' % ('BIAS'))
             else:
-                self.device.write(':SENSe1:SWEep:TYPE %s' % ('LBIas'))
-            ## The following 2 lines MUST be after setting the sweep type to Bias, otherwise an error occurs
-            self.device.write(':CALCulate1:PARameter3:DEFine %s' % ('VDC')) ## Trace 3 = VDC
-            self.device.write(':CALCulate1:PARameter4:DEFine %s' % ('IDC')) ## Trace 4 = IDC
+                self.device.write(':SENSe1:SWEep:TYPE %s' % ('LBIas')) 
 
     def measure(self, options):
         """ Triggers the measurement.
@@ -150,6 +132,8 @@ class KeysightE4990A:
         self.device.write(':TRIGger:SEQuence:SINGle')
         print("Waiting for Keysight E4990A...")
         self.opc = self.device.query_ascii_values('*OPC?')
+        ## if self.opc == 1:
+    
         self.device.write(':SOURce:BIAS:STATe %s' % ('OFF'))
 
     def return_data(self):
@@ -159,12 +143,15 @@ class KeysightE4990A:
 
         :return: the measured data, a tuple with two vectors: voltage and current
         """
-        ## Autoscale all traces
+
         self.device.write(':DISPlay:WINDow1:TRACe1:Y:SCALe:AUTO')
         self.device.write(':DISPlay:WINDow1:TRACe2:Y:SCALe:AUTO')
-        self.device.write(':DISPlay:WINDow1:TRACe3:Y:SCALe:AUTO')
-        self.device.write(':DISPlay:WINDow1:TRACe4:Y:SCALe:AUTO')
+        #self.device.write(':MMEMory:STORe:FDATa "%s"' % (filename))
         
+        #return data[:, 0], data[:, 1], data[:, 2]
+        ##test
+        #totalPoints = 100
+        #data = np.random.rand(3*totalPoints)
         self.device.write('CALCulate1:PARameter1:SELect') ## Select Ch1 trace
         x_data = self.device.query_ascii_values('CALCulate1:SELected:DATA:XAXis?')
         Ch1_data = self.device.query_ascii_values(':CALCulate1:SELected:DATA:FDATa?')
@@ -192,10 +179,6 @@ class KeysightE4990A:
     def interface(self, master):
         messagebox.showinfo(message='No specific configuration available for {0}'.format(self.info['Name']),
                             detail='Press OK to continue.', title='Device configuration')
-        
-    def abort_sweep(self):
-        self.device.write(':ABORt')
-        self.device.write(':SOURce:BIAS:STATe %s' % ('OFF'))
 
 class New(KeysightE4990A):
     """ Standarised name for the KeysightE4990A class"""
